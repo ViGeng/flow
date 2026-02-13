@@ -37,7 +37,7 @@ struct ComposerView: View {
                             .font(.system(size: 10, weight: .medium))
                             .foregroundColor(.secondary)
                         Spacer()
-                        Text("⏎ to add new")
+                        Text("⌘⏎ to link  •  ⏎ to add new")
                             .font(.system(size: 10))
                             .foregroundColor(.secondary.opacity(0.6))
                     }
@@ -109,6 +109,13 @@ struct ComposerView: View {
                 .controlSize(.small)
                 .disabled(eventTitle.trimmingCharacters(in: .whitespaces).isEmpty)
                 .help(hasSelection ? "Add as child of selected" : "Add at root level")
+                
+                // Hidden button for Cmd+Enter (Add Reference)
+                Button(action: addReferenceShortcut) {
+                    EmptyView()
+                }
+                .keyboardShortcut(.return, modifiers: .command)
+                .opacity(0)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
@@ -122,6 +129,24 @@ struct ComposerView: View {
         viewModel.addNode(title: eventTitle)
         eventTitle = ""
         showSearchResults = false
+    }
+    
+    /// Handle Cmd+Enter shortcut.
+    private func addReferenceShortcut() {
+        // 1. If search results visible, pick top
+        if showSearchResults, let first = searchResults.first {
+            addReference(first)
+            return
+        }
+        
+        // 2. If exact match exists (even if not shown), pick it
+        if let match = viewModel.allNodesFlat().first(where: { $0.title.lowercased() == eventTitle.lowercased() }) {
+            addReference(match)
+            return
+        }
+        
+        // 3. Otherwise... maybe nothing? User said "cmd+enter link", implies linking.
+        // If no match, we can't link.
     }
     
     /// Add a reference to an existing event as a blocking child.

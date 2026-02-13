@@ -1,0 +1,2524 @@
+{
+  "_type" : {
+    "_name" : "ActivityLogSection"
+  },
+  "domainType" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "com.apple.dt.unit.cocoaUnitTest"
+  },
+  "duration" : {
+    "_type" : {
+      "_name" : "Double"
+    },
+    "_value" : "13.669741034507751"
+  },
+  "result" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "succeeded"
+  },
+  "startTime" : {
+    "_type" : {
+      "_name" : "Date"
+    },
+    "_value" : "2026-02-13T16:15:06.390+0100"
+  },
+  "subsections" : {
+    "_type" : {
+      "_name" : "Array"
+    },
+    "_values" : [
+      {
+        "_type" : {
+          "_name" : "ActivityLogSection"
+        },
+        "domainType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Xcode.IDEActivityLogDomainType.LaunchLog"
+        },
+        "duration" : {
+          "_type" : {
+            "_name" : "Double"
+          },
+          "_value" : "13.448897957801819"
+        },
+        "result" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "succeeded"
+        },
+        "startTime" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:06.611+0100"
+        },
+        "subsections" : {
+          "_type" : {
+            "_name" : "Array"
+          },
+          "_values" : [
+            {
+              "_type" : {
+                "_name" : "ActivityLogSection"
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.LogSection"
+              },
+              "duration" : {
+                "_type" : {
+                  "_name" : "Double"
+                },
+                "_value" : "4.246024012565613"
+              },
+              "messages" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Platform: macOS"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Platform: macOS"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Device Identifier: 00006040-0006493C3EF8801C"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Device Identifier: 00006040-0006493C3EF8801C"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Operating System Version: 15.7.3 (24G419)"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Operating System Version: 15.7.3 (24G419)"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Model: MacBook Pro (Mac16,8)"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Model: MacBook Pro (Mac16,8)"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Target Architecture: arm64"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Target Architecture: arm64"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  }
+                ]
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:09.030+0100"
+              },
+              "subsections" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.LogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "0.0013390779495239258"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Installing on My Mac"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Installing on My Mac"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.030+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Install Actions"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "commandDetails" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Launch arguments:\n-NSTreatUnknownArgumentsAsOpen\nNO\n-ApplePersistenceIgnoreState\nYES\n\nEnvironment variables:\nCA_ASSERT_MAIN_THREAD_TRANSACTIONS=0\n__XPC_DYLD_FRAMEWORK_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\nRUN_DESTINATION_DEVICE_UDID=00006040-0006493C3EF8801C\nNSApplicationQuitWithoutSuddenTermination=YES\nXCTestSessionIdentifier=6BFB1752-911C-4846-8837-98E788E851A7\nRUN_DESTINATION_DEVICE_NAME=My Mac\nLLVM_PROFILE_FILE=\/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/83C72789-5CB8-4D6F-9583-558FC092E926-57191-0000015D246A0EDF\/81FC56D9-E07E-4325-8493-4FABEDCBF4DA-%p%c.profraw\n__XCODE_BUILT_PRODUCTS_DIR_PATHS=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\n__XPC_DYLD_LIBRARY_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\nXCTestBundleInjectPath=\/usr\/lib\/libRPAC.dylib:\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app\/Contents\/Frameworks\/libXCTestBundleInject.dylib:\/Applications\/Xcode.app\/Contents\/Developer\/usr\/lib\/libMainThreadChecker.dylib\nDYLD_FRAMEWORK_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug:\/Applications\/Xcode.app\/Contents\/SharedFrameworks:\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/Library\/Frameworks\nCA_DEBUG_TRANSACTIONS=0\nXCInjectBundleInto=unused\nDYLD_INSERT_LIBRARIES=\/usr\/lib\/libRPAC.dylib:\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app\/Contents\/Frameworks\/libXCTestBundleInject.dylib:\/Applications\/Xcode.app\/Contents\/Developer\/usr\/lib\/libMainThreadChecker.dylib\nXCTestConfigurationFilePath=\nXCODE_SCHEME_NAME=Flow\nPERFC_SUPPRESS_SYSTEM_REPORTS=1\nDYLD_LIBRARY_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug:\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/usr\/lib\nRUN_DESTINATION_DEVICE_PLATFORM_IDENTIFIER=com.apple.platform.macosx\nNSUnbufferedIO=YES\nXCTestBundlePath=Contents\/PlugIns\/FlowTests.xctest\nOS_ACTIVITY_DT_MODE=YES\nAPP_DISTRIBUTOR_ID_OVERRIDE=com.apple.AppStore\nSQLITE_ENABLE_THREAD_ASSERTIONS=1\nPERFC_RESET_INSERT_LIBRARIES=1\n__XPC_LLVM_PROFILE_FILE=\/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/83C72789-5CB8-4D6F-9583-558FC092E926-57191-0000015D246A0EDF\/81FC56D9-E07E-4325-8493-4FABEDCBF4DA-%p%c.profraw\nMallocNanoZone=1\nTERM=dumb\nPERFC_ENABLE_PROFILE_MODE=1\nXCODE_TEST_PLAN_NAME=Flow\nPERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT=1"
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.LogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "0.03763902187347412"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching new instance of FlowTests"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching new instance of FlowTests"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching suspended and the launcher is responsible for resuming."
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching suspended and the launcher is responsible for resuming."
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Console logging policy: Mirror os_logs to std:err, and read stdio from File Descriptors"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Console logging policy: Mirror os_logs to std:err, and read stdio from File Descriptors"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Resumed target process."
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Resumed target process."
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.034+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Launch FlowTests"
+                    }
+                  }
+                ]
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Launch FlowTests"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogSection"
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.LogSection"
+              },
+              "duration" : {
+                "_type" : {
+                  "_name" : "Double"
+                },
+                "_value" : "5.347211003303528"
+              },
+              "messages" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Platform: macOS"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Platform: macOS"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Device Identifier: 00006040-0006493C3EF8801C"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Device Identifier: 00006040-0006493C3EF8801C"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Operating System Version: 15.7.3 (24G419)"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Operating System Version: 15.7.3 (24G419)"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Model: MacBook Pro (Mac16,8)"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Model: MacBook Pro (Mac16,8)"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Target Architecture: arm64"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Target Architecture: arm64"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  }
+                ]
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:09.579+0100"
+              },
+              "subsections" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.LogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "0.0008549690246582031"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Installing on My Mac"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Installing on My Mac"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.579+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Install Actions"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "commandDetails" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Launch arguments:\n-NSTreatUnknownArgumentsAsOpen\nNO\n-ApplePersistenceIgnoreState\nYES\n\nEnvironment variables:\n__XPC_DYLD_FRAMEWORK_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\nXCTestSessionIdentifier=9D9A759A-2840-434F-8C3A-6799A390E43F\nRUN_DESTINATION_DEVICE_NAME=My Mac\nNSApplicationQuitWithoutSuddenTermination=YES\nCA_ASSERT_MAIN_THREAD_TRANSACTIONS=0\nRUN_DESTINATION_DEVICE_UDID=00006040-0006493C3EF8801C\n__XCODE_BUILT_PRODUCTS_DIR_PATHS=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\n__XPC_DYLD_LIBRARY_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\nLLVM_PROFILE_FILE=\/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/85E6A559-2218-4BB4-8CD0-F6B50394C57D-57191-0000015D2532D6A9\/8607A47A-8880-4CEA-88C4-CF2B9819A3BF-%p%c.profraw\nXCTestBundleInjectPath=\/usr\/lib\/libRPAC.dylib:\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app\/Contents\/Frameworks\/libXCTestBundleInject.dylib:\/Applications\/Xcode.app\/Contents\/Developer\/usr\/lib\/libMainThreadChecker.dylib\nCA_DEBUG_TRANSACTIONS=0\nDYLD_FRAMEWORK_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug:\/Applications\/Xcode.app\/Contents\/SharedFrameworks:\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/Library\/Frameworks\nXCInjectBundleInto=unused\nDYLD_INSERT_LIBRARIES=\/usr\/lib\/libRPAC.dylib:\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app\/Contents\/Frameworks\/libXCTestBundleInject.dylib:\/Applications\/Xcode.app\/Contents\/Developer\/usr\/lib\/libMainThreadChecker.dylib\nXCTestConfigurationFilePath=\nXCODE_SCHEME_NAME=Flow\nPERFC_SUPPRESS_SYSTEM_REPORTS=1\nDYLD_LIBRARY_PATH=\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug:\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/usr\/lib\nRUN_DESTINATION_DEVICE_PLATFORM_IDENTIFIER=com.apple.platform.macosx\nAPP_DISTRIBUTOR_ID_OVERRIDE=com.apple.AppStore\nNSUnbufferedIO=YES\nOS_ACTIVITY_DT_MODE=YES\nPERFC_RESET_INSERT_LIBRARIES=1\nXCTestBundlePath=Contents\/PlugIns\/FlowTests.xctest\nSQLITE_ENABLE_THREAD_ASSERTIONS=1\nMallocNanoZone=1\n__XPC_LLVM_PROFILE_FILE=\/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/85E6A559-2218-4BB4-8CD0-F6B50394C57D-57191-0000015D2532D6A9\/8607A47A-8880-4CEA-88C4-CF2B9819A3BF-%p%c.profraw\nTERM=dumb\nPERFC_ENABLE_PROFILE_MODE=1\nXCODE_TEST_PLAN_NAME=Flow\nPERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT=1"
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.LogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "0.025104999542236328"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching new instance of FlowTests"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching new instance of FlowTests"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching suspended and the launcher is responsible for resuming."
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Launching suspended and the launcher is responsible for resuming."
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Console logging policy: Mirror os_logs to std:err, and read stdio from File Descriptors"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Console logging policy: Mirror os_logs to std:err, and read stdio from File Descriptors"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        },
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Resumed target process."
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Resumed target process."
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.580+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Launch FlowTests"
+                    }
+                  }
+                ]
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Launch FlowTests"
+              }
+            }
+          ]
+        },
+        "title" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Launch actions"
+        }
+      },
+      {
+        "_type" : {
+          "_name" : "ActivityLogUnitTestSection",
+          "_supertype" : {
+            "_name" : "ActivityLogSection"
+          }
+        },
+        "domainType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "com.apple.dt.unit.cocoaUnitTest"
+        },
+        "result" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "succeeded"
+        },
+        "startTime" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:09.026+0100"
+        },
+        "subsections" : {
+          "_type" : {
+            "_name" : "Array"
+          },
+          "_values" : [
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Worker"
+              },
+              "duration" : {
+                "_type" : {
+                  "_name" : "Double"
+                },
+                "_value" : "4.0"
+              },
+              "emittedOutput" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "2026-02-13 16:15:09.278695+0100 Flow[57223:1568233] [logging-persist] cannot open file at line 49455 of [1b37c146ee]\n2026-02-13 16:15:09.278828+0100 Flow[57223:1568233] [logging-persist] os_unix.c:49455: (2) open(\/private\/var\/db\/DetachedSignatures) - No such file or directory\nDEBUG: anchorMap keys: []\n2026-02-13 16:15:09.350161+0100 Flow[57223:1568233] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to \/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/tmp\/com.vigeng.Flow.savedState\n◇ Test run started.\n↳ Testing Library Version: 1501\n↳ Target Platform: arm64e-apple-macos14.0\n◇ Suite FlowViewModelReferenceTests started.\n◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 3.333 seconds with 4 issues.\n✘ Suite FlowViewModelReferenceTests failed after 3.333 seconds with 4 issues.\n"
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "runnablePath" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app"
+              },
+              "runnableUTI" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.application-bundle"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:09.028+0100"
+              },
+              "subsections" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "commandDetails" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-7B9BA1F0-A6C5-4FE0-A9C2-B81F91FBEBCC\/Session-FlowTests-2026-02-13_161509-PLLn8k.log"
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "4.494190216064453e-05"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "location" : {
+                            "_type" : {
+                              "_name" : "DocumentLocation"
+                            },
+                            "concreteTypeName" : {
+                              "_type" : {
+                                "_name" : "String"
+                              },
+                              "_value" : "DVTTextDocumentLocation"
+                            },
+                            "url" : {
+                              "_type" : {
+                                "_name" : "String"
+                              },
+                              "_value" : "file:\/\/\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test%20Scheme%20Action-Iteration-1\/FlowTests-7B9BA1F0-A6C5-4FE0-A9C2-B81F91FBEBCC\/Session-FlowTests-2026-02-13_161509-PLLn8k.log"
+                            }
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-7B9BA1F0-A6C5-4FE0-A9C2-B81F91FBEBCC\/Session-FlowTests-2026-02-13_161509-PLLn8k.log"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-7B9BA1F0-A6C5-4FE0-A9C2-B81F91FBEBCC\/Session-FlowTests-2026-02-13_161509-PLLn8k.log"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.028+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Writing diagnostic log for test runner launch."
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "4.0"
+                    },
+                    "emittedOutput" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "2026-02-13 16:15:09.278695+0100 Flow[57223:1568233] [logging-persist] cannot open file at line 49455 of [1b37c146ee]\n2026-02-13 16:15:09.278828+0100 Flow[57223:1568233] [logging-persist] os_unix.c:49455: (2) open(\/private\/var\/db\/DetachedSignatures) - No such file or directory\nDEBUG: anchorMap keys: []\n2026-02-13 16:15:09.350161+0100 Flow[57223:1568233] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to \/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/tmp\/com.vigeng.Flow.savedState\n◇ Test run started.\n↳ Testing Library Version: 1501\n↳ Target Platform: arm64e-apple-macos14.0\n◇ Suite FlowViewModelReferenceTests started.\n◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 3.333 seconds with 4 issues.\n✘ Suite FlowViewModelReferenceTests failed after 3.333 seconds with 4 issues.\n"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.915+0100"
+                    },
+                    "subsections" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogUnitTestSection",
+                            "_supertype" : {
+                              "_name" : "ActivityLogSection"
+                            }
+                          },
+                          "domainType" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                          },
+                          "duration" : {
+                            "_type" : {
+                              "_name" : "Double"
+                            },
+                            "_value" : "4.0"
+                          },
+                          "emittedOutput" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995710\"]\nDEBUG: Found ref with ID: target-task-1770995710\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 3.333 seconds with 4 issues.\n"
+                          },
+                          "messages" : {
+                            "_type" : {
+                              "_name" : "Array"
+                            },
+                            "_values" : [
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=50&StartingLineNumber=50"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (targetNode.isChecked → true) == false: \/\/ Check initial state"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (targetNode.isChecked → true) == false: \/\/ Check initial state"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=51&StartingLineNumber=51"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (refNode.isChecked → true) == false"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (refNode.isChecked → true) == false"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=61&StartingLineNumber=61"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef.isChecked → false) == true: Reference node should check 'true' after target is checked"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef.isChecked → false) == true: Reference node should check 'true' after target is checked"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=69&StartingLineNumber=69"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef2.isChecked → true) == false: Reference node should check 'false' after target is unchecked"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef2.isChecked → true) == false: Reference node should check 'false' after target is unchecked"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              }
+                            ]
+                          },
+                          "result" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "succeeded"
+                          },
+                          "startTime" : {
+                            "_type" : {
+                              "_name" : "Date"
+                            },
+                            "_value" : "2026-02-13T16:15:09.919+0100"
+                          },
+                          "suiteName" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "FlowViewModelReferenceTests"
+                          },
+                          "summary" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "✘ Test testSyncReferenceOnTargetCompletion() failed after 3.333 seconds with 4 issues.\n"
+                          },
+                          "testName" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "testSyncReferenceOnTargetCompletion()"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Run test case testSyncReferenceOnTargetCompletion()"
+                          }
+                        }
+                      ]
+                    },
+                    "suiteName" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "FlowViewModelReferenceTests"
+                    },
+                    "summary" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "✘ Suite FlowViewModelReferenceTests failed after 3.333 seconds with 4 issues.\n"
+                    },
+                    "testsPassedString" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "1 test total, 0 passed"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Run test suite FlowViewModelReferenceTests"
+                    }
+                  }
+                ]
+              },
+              "testsPassedString" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "1 test total, 0 passed"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Flow (57223)"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Worker"
+              },
+              "duration" : {
+                "_type" : {
+                  "_name" : "Double"
+                },
+                "_value" : "4.0"
+              },
+              "emittedOutput" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "2026-02-13 16:15:09.737601+0100 Flow[57227:1568320] [logging-persist] cannot open file at line 49455 of [1b37c146ee]\n2026-02-13 16:15:09.737734+0100 Flow[57227:1568320] [logging-persist] os_unix.c:49455: (2) open(\/private\/var\/db\/DetachedSignatures) - No such file or directory\nDEBUG: anchorMap keys: []\n2026-02-13 16:15:09.800489+0100 Flow[57227:1568320] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to \/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/tmp\/com.vigeng.Flow.savedState\n◇ Test run started.\n↳ Testing Library Version: 1501\n↳ Target Platform: arm64e-apple-macos14.0\n◇ Suite FlowViewModelReferenceTests started.\n◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 4.785 seconds with 4 issues.\n✘ Suite FlowViewModelReferenceTests failed after 4.786 seconds with 4 issues.\n"
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "runnablePath" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Build\/Products\/Debug\/Flow.app"
+              },
+              "runnableUTI" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.application-bundle"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:09.578+0100"
+              },
+              "subsections" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogCommandInvocationSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "commandDetails" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-B3989AD0-4135-456F-82FF-747D0EC42E7B\/Session-FlowTests-2026-02-13_161509-HTczg9.log"
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "3.3974647521972656e-05"
+                    },
+                    "exitCode" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "0"
+                    },
+                    "messages" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogMessage"
+                          },
+                          "location" : {
+                            "_type" : {
+                              "_name" : "DocumentLocation"
+                            },
+                            "concreteTypeName" : {
+                              "_type" : {
+                                "_name" : "String"
+                              },
+                              "_value" : "DVTTextDocumentLocation"
+                            },
+                            "url" : {
+                              "_type" : {
+                                "_name" : "String"
+                              },
+                              "_value" : "file:\/\/\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test%20Scheme%20Action-Iteration-1\/FlowTests-B3989AD0-4135-456F-82FF-747D0EC42E7B\/Session-FlowTests-2026-02-13_161509-HTczg9.log"
+                            }
+                          },
+                          "shortTitle" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-B3989AD0-4135-456F-82FF-747D0EC42E7B\/Session-FlowTests-2026-02-13_161509-HTczg9.log"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "\/Users\/wei\/Library\/Developer\/Xcode\/DerivedData\/Flow-fqmodrcmzpelxngdjsxsgsfpqduj\/Logs\/Test\/Test-Flow-2026.02.13_16-15-06-+0100.xcresult\/Staging\/1_Test\/Diagnostics\/FlowTests-6FE8A153-E2DA-4339-92EE-84B8DD02428E-Configuration-Test Scheme Action-Iteration-1\/FlowTests-B3989AD0-4135-456F-82FF-747D0EC42E7B\/Session-FlowTests-2026-02-13_161509-HTczg9.log"
+                          },
+                          "type" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "notice"
+                          }
+                        }
+                      ]
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:09.578+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Writing diagnostic log for test runner launch."
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "4.0"
+                    },
+                    "emittedOutput" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "2026-02-13 16:15:09.737601+0100 Flow[57227:1568320] [logging-persist] cannot open file at line 49455 of [1b37c146ee]\n2026-02-13 16:15:09.737734+0100 Flow[57227:1568320] [logging-persist] os_unix.c:49455: (2) open(\/private\/var\/db\/DetachedSignatures) - No such file or directory\nDEBUG: anchorMap keys: []\n2026-02-13 16:15:09.800489+0100 Flow[57227:1568320] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to \/Users\/wei\/Library\/Containers\/com.vigeng.Flow\/Data\/tmp\/com.vigeng.Flow.savedState\n◇ Test run started.\n↳ Testing Library Version: 1501\n↳ Target Platform: arm64e-apple-macos14.0\n◇ Suite FlowViewModelReferenceTests started.\n◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 4.785 seconds with 4 issues.\n✘ Suite FlowViewModelReferenceTests failed after 4.786 seconds with 4 issues.\n"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:10.124+0100"
+                    },
+                    "subsections" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActivityLogUnitTestSection",
+                            "_supertype" : {
+                              "_name" : "ActivityLogSection"
+                            }
+                          },
+                          "domainType" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "com.apple.dt.IDE.UnitTestLogSection"
+                          },
+                          "duration" : {
+                            "_type" : {
+                              "_name" : "Double"
+                            },
+                            "_value" : "4.0"
+                          },
+                          "emittedOutput" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "◇ Test testSyncReferenceOnTargetCompletion() started.\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: []\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:51:9: Expectation failed: (targetNode.isChecked → true) == false\n↳ \/\/ Check initial state\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:52:9: Expectation failed: (refNode.isChecked → true) == false\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from true to false\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:62:9: Expectation failed: (freshRef.isChecked → false) == true\n↳ Reference node should check 'true' after target is checked\nDEBUG: anchorMap keys: [\"target-task-1770995712\"]\nDEBUG: Found ref with ID: target-task-1770995712\nDEBUG: Syncing ref Target Task from false to true\n✘ Test testSyncReferenceOnTargetCompletion() recorded an issue at FlowViewModelReferenceTests.swift:70:9: Expectation failed: (freshRef2.isChecked → true) == false\n↳ Reference node should check 'false' after target is unchecked\n✘ Test testSyncReferenceOnTargetCompletion() failed after 4.785 seconds with 4 issues.\n"
+                          },
+                          "messages" : {
+                            "_type" : {
+                              "_name" : "Array"
+                            },
+                            "_values" : [
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=50&StartingLineNumber=50"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (targetNode.isChecked → true) == false: \/\/ Check initial state"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (targetNode.isChecked → true) == false: \/\/ Check initial state"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=51&StartingLineNumber=51"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (refNode.isChecked → true) == false"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (refNode.isChecked → true) == false"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=61&StartingLineNumber=61"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef.isChecked → false) == true: Reference node should check 'true' after target is checked"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef.isChecked → false) == true: Reference node should check 'true' after target is checked"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              },
+                              {
+                                "_type" : {
+                                  "_name" : "ActivityLogMessage"
+                                },
+                                "location" : {
+                                  "_type" : {
+                                    "_name" : "DocumentLocation"
+                                  },
+                                  "concreteTypeName" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "DVTTextDocumentLocation"
+                                  },
+                                  "url" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "file:\/\/\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift#EndingLineNumber=69&StartingLineNumber=69"
+                                  }
+                                },
+                                "shortTitle" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef2.isChecked → true) == false: Reference node should check 'false' after target is unchecked"
+                                },
+                                "title" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "Expectation failed: (freshRef2.isChecked → true) == false: Reference node should check 'false' after target is unchecked"
+                                },
+                                "type" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "test failure"
+                                }
+                              }
+                            ]
+                          },
+                          "result" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "succeeded"
+                          },
+                          "startTime" : {
+                            "_type" : {
+                              "_name" : "Date"
+                            },
+                            "_value" : "2026-02-13T16:15:10.227+0100"
+                          },
+                          "suiteName" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "FlowViewModelReferenceTests"
+                          },
+                          "summary" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "✘ Test testSyncReferenceOnTargetCompletion() failed after 4.785 seconds with 4 issues.\n"
+                          },
+                          "testName" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "testSyncReferenceOnTargetCompletion()"
+                          },
+                          "title" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Run test case testSyncReferenceOnTargetCompletion()"
+                          }
+                        }
+                      ]
+                    },
+                    "suiteName" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "FlowViewModelReferenceTests"
+                    },
+                    "summary" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "✘ Suite FlowViewModelReferenceTests failed after 4.786 seconds with 4 issues.\n"
+                    },
+                    "testsPassedString" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "1 test total, 0 passed"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Run test suite FlowViewModelReferenceTests"
+                    }
+                  }
+                ]
+              },
+              "testsPassedString" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "1 test total, 0 passed"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Flow (57227)"
+              }
+            }
+          ]
+        },
+        "title" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Test target FlowTests"
+        }
+      },
+      {
+        "_type" : {
+          "_name" : "ActivityLogUnitTestSection",
+          "_supertype" : {
+            "_name" : "ActivityLogSection"
+          }
+        },
+        "domainType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+        },
+        "result" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "succeeded"
+        },
+        "startTime" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:20.007+0100"
+        },
+        "subsections" : {
+          "_type" : {
+            "_name" : "Array"
+          },
+          "_values" : [
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+              },
+              "messages" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Downloading profiles for com.vigeng.Flow from 2 directories"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Downloading profiles for com.vigeng.Flow from 2 directories"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  }
+                ]
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:20.007+0100"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Downloading profiles from My Mac"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogSection"
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+              },
+              "duration" : {
+                "_type" : {
+                  "_name" : "Double"
+                },
+                "_value" : "0.004423975944519043"
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:20.039+0100"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Merging 2 profiles using llvm-profdata (1700.6.3.2.0)"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:20.044+0100"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Pre-processing target built products"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:20.048+0100"
+              },
+              "subsections" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/ContentView.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/FlowUITests\/FlowUITests.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/FlowApp.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/FlowTests\/FlowTests.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/TaskItem.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/FlowUITests\/FlowUITestsLaunchTests.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.048+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/FlowViewModel.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.049+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/EventCardView.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.049+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/MarkdownParser.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.050+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/Flow\/ComposerView.swift"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogUnitTestSection",
+                      "_supertype" : {
+                        "_name" : "ActivityLogSection"
+                      }
+                    },
+                    "domainType" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+                    },
+                    "result" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "succeeded"
+                    },
+                    "startTime" : {
+                      "_type" : {
+                        "_name" : "Date"
+                      },
+                      "_value" : "2026-02-13T16:15:20.050+0100"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Processing file \/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelTests.swift"
+                    }
+                  }
+                ]
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Processing source file data"
+              }
+            },
+            {
+              "_type" : {
+                "_name" : "ActivityLogUnitTestSection",
+                "_supertype" : {
+                  "_name" : "ActivityLogSection"
+                }
+              },
+              "domainType" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "com.apple.dt.IDE.UnitTestLogSection.Coverage"
+              },
+              "messages" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target Flow.app"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target Flow.app"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target FlowTests.xctest"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target FlowTests.xctest"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  },
+                  {
+                    "_type" : {
+                      "_name" : "ActivityLogMessage"
+                    },
+                    "shortTitle" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target FlowUITests.xctest"
+                    },
+                    "title" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "Generating entry for target FlowUITests.xctest"
+                    },
+                    "type" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "notice"
+                    }
+                  }
+                ]
+              },
+              "result" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "succeeded"
+              },
+              "startTime" : {
+                "_type" : {
+                  "_name" : "Date"
+                },
+                "_value" : "2026-02-13T16:15:20.058+0100"
+              },
+              "title" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Generating target entries"
+              }
+            }
+          ]
+        },
+        "title" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Generating coverage report"
+        }
+      }
+    ]
+  },
+  "title" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "Test Flow"
+  }
+}

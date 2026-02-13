@@ -137,6 +137,75 @@ struct MarkdownParserTests {
         #expect(reparsed[0].children[1].children[0].tags.contains("wait"))
         #expect(reparsed[1].title == "Other task")
     }
+    
+    @Test func serializeAnchorsAndReferences() throws {
+        // Create a target node with an anchor and some metadata
+        let target = EventNode(
+            title: "Target Task",
+            tags: ["urgent"],
+            metadata: ["due": "2026-01-01"],
+            anchorID: "target-123"
+        )
+        
+        // Create a reference node pointing to that anchor
+        // Even if we give it extra tags/metadata locally, they should be stripped
+        // But for this test, let's create it "clean" as per ViewModel logic, 
+        // OR creating it dirty to verify serialization cleans it? 
+        // Serializer just reads what's there. 
+        // The ViewModel logic ensures it's clean. The Serializer ensures it *writes* clean even if dirty?
+        // My change to serializer *does* ignore self.tags/metadata for references. 
+        // So let's test that "dirty" ref node is serialized clean.
+        let ref = EventNode(
+            title: "Target Task",
+            tags: ["ref", "ignoredTag"], 
+            metadata: ["bad": "data"],
+            referenceID: "target-123"
+        )
+        
+        // Serialize
+        let serialized = MarkdownParser.serialize([target, ref])
+        
+        // Verify output string contains expected format
+        // Expected Target: "- [ ] Target Task <a name="target-123"></a> #urgent due:2026-01-01"
+        // Expected Ref:    "- [ ] [Target Task](#target-123) #ref" (NO other tags/metadata)
+        
+        print("DEBUG: Serialized Ref Output:\n\(serialized)")
+        
+        #expect(serialized.contains("<a name=\"target-123\"></a>"))
+        #expect(serialized.contains("#urgent"))
+        #expect(serialized.contains("due:2026-01-01"))
+        
+        #expect(serialized.contains("[Target Task](#target-123)"))
+        // Should contain #ref
+        #expect(serialized.contains(" #ref"))
+        
+        // Should NOT contain ref's extra tags/metadata in the ref line
+        // Ref line logic:
+        // The ref line is the one with `(#target-123)`.
+        let lines = serialized.components(separatedBy: .newlines)
+        if let refLine = lines.first(where: { $0.contains("(#target-123)") }) {
+            #expect(!refLine.contains("ignoredTag"))
+            #expect(!refLine.contains("bad:data"))
+        } else {
+            #expect(Bool(false), "Reference line not found")
+        }
+        
+        // Round Trip
+        let reparsed = MarkdownParser.parse(serialized)
+        
+        #expect(reparsed.count == 2)
+        
+        let parsedTarget = reparsed[0]
+        let parsedRef = reparsed[1]
+        
+        #expect(parsedTarget.title == "Target Task")
+        #expect(parsedTarget.anchorID == "target-123")
+        
+        #expect(parsedRef.title == "Target Task")
+        #expect(parsedRef.referenceID == "target-123")
+        #expect(parsedRef.tags.contains("ref"))
+        #expect(!parsedRef.tags.contains("ignoredTag")) // Check stripping worked on read-back (implied)
+    }
 }
 
 // MARK: - State Propagation Tests
@@ -213,5 +282,15 @@ struct EventStateTests {
         let node = EventNode(title: "Solo")
         #expect(node.childProgress == nil)
         #expect(node.childProgressText == nil)
+    }
+    
+    @Test @MainActor func testWaitTagPreservation() {
+        let (title, tags) = FlowViewModel.extractTags(from: "Task #wait")
+        #expect(title == "Task")
+        #expect(tags.contains("wait"))
+        
+        let (title2, tags2) = FlowViewModel.extractTags(from: "Task #ref")
+        #expect(title2 == "Task")
+        #expect(!tags2.contains("ref")) // ref is still excluded
     }
 }

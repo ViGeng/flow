@@ -1,0 +1,229 @@
+{
+  "_type" : {
+    "_name" : "ActionTestPlanRunSummaries"
+  },
+  "summaries" : {
+    "_type" : {
+      "_name" : "Array"
+    },
+    "_values" : [
+      {
+        "_type" : {
+          "_name" : "ActionTestPlanRunSummary",
+          "_supertype" : {
+            "_name" : "ActionAbstractTestSummary"
+          }
+        },
+        "name" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Test Scheme Action"
+        },
+        "testableSummaries" : {
+          "_type" : {
+            "_name" : "Array"
+          },
+          "_values" : [
+            {
+              "_type" : {
+                "_name" : "ActionTestableSummary",
+                "_supertype" : {
+                  "_name" : "ActionAbstractTestSummary"
+                }
+              },
+              "diagnosticsDirectoryName" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : ""
+              },
+              "identifierURL" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "test:\/\/com.apple.xcode\/Flow\/FlowTests"
+              },
+              "name" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "FlowTests"
+              },
+              "projectRelativePath" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "Flow.xcodeproj"
+              },
+              "targetName" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "FlowTests"
+              },
+              "testKind" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : "app hosted"
+              },
+              "testLanguage" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : ""
+              },
+              "testRegion" : {
+                "_type" : {
+                  "_name" : "String"
+                },
+                "_value" : ""
+              },
+              "tests" : {
+                "_type" : {
+                  "_name" : "Array"
+                },
+                "_values" : [
+                  {
+                    "_type" : {
+                      "_name" : "ActionTestSummaryGroup",
+                      "_supertype" : {
+                        "_name" : "ActionTestSummaryIdentifiableObject",
+                        "_supertype" : {
+                          "_name" : "ActionAbstractTestSummary"
+                        }
+                      }
+                    },
+                    "duration" : {
+                      "_type" : {
+                        "_name" : "Double"
+                      },
+                      "_value" : "4.0"
+                    },
+                    "identifier" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "FlowViewModelReferenceTests"
+                    },
+                    "identifierURL" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "test:\/\/com.apple.xcode\/Flow\/FlowTests\/FlowViewModelReferenceTests"
+                    },
+                    "name" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "FlowViewModelReferenceTests"
+                    },
+                    "subtests" : {
+                      "_type" : {
+                        "_name" : "Array"
+                      },
+                      "_values" : [
+                        {
+                          "_type" : {
+                            "_name" : "ActionTestMetadata",
+                            "_supertype" : {
+                              "_name" : "ActionTestSummaryIdentifiableObject",
+                              "_supertype" : {
+                                "_name" : "ActionAbstractTestSummary"
+                              }
+                            }
+                          },
+                          "duration" : {
+                            "_type" : {
+                              "_name" : "Double"
+                            },
+                            "_value" : "4.0"
+                          },
+                          "failureSummariesCount" : {
+                            "_type" : {
+                              "_name" : "Int"
+                            },
+                            "_value" : "4"
+                          },
+                          "identifier" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "FlowViewModelReferenceTests\/testSyncReferenceOnTargetCompletion()"
+                          },
+                          "identifierURL" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "test:\/\/com.apple.xcode\/Flow\/FlowTests\/FlowViewModelReferenceTests\/testSyncReferenceOnTargetCompletion()"
+                          },
+                          "name" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "testSyncReferenceOnTargetCompletion()"
+                          },
+                          "summaryRef" : {
+                            "_type" : {
+                              "_name" : "Reference"
+                            },
+                            "id" : {
+                              "_type" : {
+                                "_name" : "String"
+                              },
+                              "_value" : "0~Cy5Ia4YqMsEIdqKO9WThAEl4ONYMQs-xInLYaB4nCCtxcx0vKXT8CUK_I6cQckCf3w32qG38dCPeJb0JDCQcjg=="
+                            },
+                            "targetType" : {
+                              "_type" : {
+                                "_name" : "TypeDefinition"
+                              },
+                              "name" : {
+                                "_type" : {
+                                  "_name" : "String"
+                                },
+                                "_value" : "ActionTestSummary"
+                              },
+                              "supertype" : {
+                                "_type" : {
+                                  "_name" : "TypeDefinition"
+                                },
+                                "name" : {
+                                  "_type" : {
+                                    "_name" : "String"
+                                  },
+                                  "_value" : "ActionTestSummaryIdentifiableObject"
+                                },
+                                "supertype" : {
+                                  "_type" : {
+                                    "_name" : "TypeDefinition"
+                                  },
+                                  "name" : {
+                                    "_type" : {
+                                      "_name" : "String"
+                                    },
+                                    "_value" : "ActionAbstractTestSummary"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "testStatus" : {
+                            "_type" : {
+                              "_name" : "String"
+                            },
+                            "_value" : "Failure"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

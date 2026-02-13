@@ -213,16 +213,35 @@ struct MarkdownParser {
     /// Recursively serialize a single node and its children.
     private static func serializeNode(_ node: EventNode, depth: Int, into lines: inout [String]) {
         let indent = String(repeating: " ", count: depth * indentUnit)
-        var line = "\(indent)- [\(node.isChecked ? "x" : " ")] \(node.title)"
         
-        // Append tags
-        for tag in node.tags {
-            line += " #\(tag)"
-        }
+        // Base line: "- [x] "
+        var line = "\(indent)- [\(node.isChecked ? "x" : " ")] "
         
-        // Append metadata
-        for (key, value) in node.metadata.sorted(by: { $0.key < $1.key }) {
-            line += " \(key):\(value)"
+        if let refID = node.referenceID {
+            line += "[\(node.title)](#\(refID))"
+            // For references, we do NOT serialize any other tags or metadata.
+            // Just #ref is implied by the parser structure, or we can explicit add it if needed.
+            // User example: `[blocking event t1](-event-t1...) #blocking #ref`
+            // But user also said "ref task/event can not have any other properties".
+            // Let's add #ref explicitly to be safe and consistent with parser.
+            line += " #ref"
+        } else {
+            line += node.title
+            
+            // Append Anchor if present: <a name="anchorID"></a>
+            if let anchorID = node.anchorID {
+                line += " <a name=\"\(anchorID)\"></a>"
+            }
+            
+            // Append tags
+            for tag in node.tags {
+                line += " #\(tag)"
+            }
+            
+            // Append metadata
+            for (key, value) in node.metadata.sorted(by: { $0.key < $1.key }) {
+                line += " \(key):\(value)"
+            }
         }
         
         lines.append(line)

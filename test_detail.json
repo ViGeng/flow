@@ -1,0 +1,1584 @@
+{
+  "_type" : {
+    "_name" : "ActionTestSummary",
+    "_supertype" : {
+      "_name" : "ActionTestSummaryIdentifiableObject",
+      "_supertype" : {
+        "_name" : "ActionAbstractTestSummary"
+      }
+    }
+  },
+  "duration" : {
+    "_type" : {
+      "_name" : "Double"
+    },
+    "_value" : "4.0"
+  },
+  "failureSummaries" : {
+    "_type" : {
+      "_name" : "Array"
+    },
+    "_values" : [
+      {
+        "_type" : {
+          "_name" : "ActionTestFailureSummary"
+        },
+        "expression" : {
+          "_type" : {
+            "_name" : "TestExpression"
+          },
+          "sourceCode" : {
+            "_type" : {
+              "_name" : "String"
+            },
+            "_value" : "targetNode.isChecked == false"
+          },
+          "subexpressions" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "targetNode.isChecked"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "false"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "fileName" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+        },
+        "issueType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Assertion Failure"
+        },
+        "isTopLevelFailure" : {
+          "_type" : {
+            "_name" : "Bool"
+          },
+          "_value" : "true"
+        },
+        "lineNumber" : {
+          "_type" : {
+            "_name" : "Int"
+          },
+          "_value" : "51"
+        },
+        "message" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Expectation failed: (targetNode.isChecked → true) == false: \/\/ Check initial state"
+        },
+        "sourceCodeContext" : {
+          "_type" : {
+            "_name" : "SourceCodeContext"
+          },
+          "callStack" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382807344"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382805595"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382261943"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4378889043"
+                },
+                "symbolInfo" : {
+                  "_type" : {
+                    "_name" : "SourceCodeSymbolInfo"
+                  },
+                  "imageName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowTests"
+                  },
+                  "location" : {
+                    "_type" : {
+                      "_name" : "SourceCodeLocation"
+                    },
+                    "filePath" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+                    },
+                    "lineNumber" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "51"
+                    }
+                  },
+                  "symbolName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowViewModelReferenceTests.testSyncReferenceOnTargetCompletion()"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382684132"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382629248"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599335008"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599334152"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382632272"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382622872"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382620640"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382672768"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599548988"
+                }
+              }
+            ]
+          },
+          "location" : {
+            "_type" : {
+              "_name" : "SourceCodeLocation"
+            },
+            "filePath" : {
+              "_type" : {
+                "_name" : "String"
+              },
+              "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+            },
+            "lineNumber" : {
+              "_type" : {
+                "_name" : "Int"
+              },
+              "_value" : "51"
+            }
+          }
+        },
+        "timestamp" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:11.047+0100"
+        },
+        "uuid" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "2F4C7E5F-33CC-4B08-AE90-0A0D6CFE55C7"
+        }
+      },
+      {
+        "_type" : {
+          "_name" : "ActionTestFailureSummary"
+        },
+        "expression" : {
+          "_type" : {
+            "_name" : "TestExpression"
+          },
+          "sourceCode" : {
+            "_type" : {
+              "_name" : "String"
+            },
+            "_value" : "refNode.isChecked == false"
+          },
+          "subexpressions" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "refNode.isChecked"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "false"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "fileName" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+        },
+        "issueType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Assertion Failure"
+        },
+        "isTopLevelFailure" : {
+          "_type" : {
+            "_name" : "Bool"
+          },
+          "_value" : "true"
+        },
+        "lineNumber" : {
+          "_type" : {
+            "_name" : "Int"
+          },
+          "_value" : "52"
+        },
+        "message" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Expectation failed: (refNode.isChecked → true) == false"
+        },
+        "sourceCodeContext" : {
+          "_type" : {
+            "_name" : "SourceCodeContext"
+          },
+          "callStack" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382807344"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382805595"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382261943"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4378889567"
+                },
+                "symbolInfo" : {
+                  "_type" : {
+                    "_name" : "SourceCodeSymbolInfo"
+                  },
+                  "imageName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowTests"
+                  },
+                  "location" : {
+                    "_type" : {
+                      "_name" : "SourceCodeLocation"
+                    },
+                    "filePath" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+                    },
+                    "lineNumber" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "52"
+                    }
+                  },
+                  "symbolName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowViewModelReferenceTests.testSyncReferenceOnTargetCompletion()"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382684132"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382629248"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599335008"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599334152"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382632272"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382622872"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382620640"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382672768"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599548988"
+                }
+              }
+            ]
+          },
+          "location" : {
+            "_type" : {
+              "_name" : "SourceCodeLocation"
+            },
+            "filePath" : {
+              "_type" : {
+                "_name" : "String"
+              },
+              "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+            },
+            "lineNumber" : {
+              "_type" : {
+                "_name" : "Int"
+              },
+              "_value" : "52"
+            }
+          }
+        },
+        "timestamp" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:11.099+0100"
+        },
+        "uuid" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "DD7C4BF1-8738-4D95-A46D-C5CEF4D29B11"
+        }
+      },
+      {
+        "_type" : {
+          "_name" : "ActionTestFailureSummary"
+        },
+        "expression" : {
+          "_type" : {
+            "_name" : "TestExpression"
+          },
+          "sourceCode" : {
+            "_type" : {
+              "_name" : "String"
+            },
+            "_value" : "freshRef.isChecked == true"
+          },
+          "subexpressions" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "freshRef.isChecked"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "true"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "fileName" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+        },
+        "issueType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Assertion Failure"
+        },
+        "isTopLevelFailure" : {
+          "_type" : {
+            "_name" : "Bool"
+          },
+          "_value" : "true"
+        },
+        "lineNumber" : {
+          "_type" : {
+            "_name" : "Int"
+          },
+          "_value" : "62"
+        },
+        "message" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Expectation failed: (freshRef.isChecked → false) == true: Reference node should check 'true' after target is checked"
+        },
+        "sourceCodeContext" : {
+          "_type" : {
+            "_name" : "SourceCodeContext"
+          },
+          "callStack" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382807344"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382805595"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382261943"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4378890591"
+                },
+                "symbolInfo" : {
+                  "_type" : {
+                    "_name" : "SourceCodeSymbolInfo"
+                  },
+                  "imageName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowTests"
+                  },
+                  "location" : {
+                    "_type" : {
+                      "_name" : "SourceCodeLocation"
+                    },
+                    "filePath" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+                    },
+                    "lineNumber" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "62"
+                    }
+                  },
+                  "symbolName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowViewModelReferenceTests.testSyncReferenceOnTargetCompletion()"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382684132"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382629248"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599335008"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599334152"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382632272"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382622872"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382620640"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382672768"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599548988"
+                }
+              }
+            ]
+          },
+          "location" : {
+            "_type" : {
+              "_name" : "SourceCodeLocation"
+            },
+            "filePath" : {
+              "_type" : {
+                "_name" : "String"
+              },
+              "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+            },
+            "lineNumber" : {
+              "_type" : {
+                "_name" : "Int"
+              },
+              "_value" : "62"
+            }
+          }
+        },
+        "timestamp" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:12.160+0100"
+        },
+        "uuid" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "2AF00819-3505-410C-8CC9-0A909F78905A"
+        }
+      },
+      {
+        "_type" : {
+          "_name" : "ActionTestFailureSummary"
+        },
+        "expression" : {
+          "_type" : {
+            "_name" : "TestExpression"
+          },
+          "sourceCode" : {
+            "_type" : {
+              "_name" : "String"
+            },
+            "_value" : "freshRef2.isChecked == false"
+          },
+          "subexpressions" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "freshRef2.isChecked"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "true"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "TestExpression"
+                },
+                "sourceCode" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "false"
+                },
+                "value" : {
+                  "_type" : {
+                    "_name" : "TestValue"
+                  },
+                  "debugDescription" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "description" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "false"
+                  },
+                  "fullyQualifiedTypeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Swift.Bool"
+                  },
+                  "typeName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "Bool"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "fileName" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+        },
+        "issueType" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Assertion Failure"
+        },
+        "isTopLevelFailure" : {
+          "_type" : {
+            "_name" : "Bool"
+          },
+          "_value" : "true"
+        },
+        "lineNumber" : {
+          "_type" : {
+            "_name" : "Int"
+          },
+          "_value" : "70"
+        },
+        "message" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "Expectation failed: (freshRef2.isChecked → true) == false: Reference node should check 'false' after target is unchecked"
+        },
+        "sourceCodeContext" : {
+          "_type" : {
+            "_name" : "SourceCodeContext"
+          },
+          "callStack" : {
+            "_type" : {
+              "_name" : "Array"
+            },
+            "_values" : [
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382807344"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382805595"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382261943"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4378891603"
+                },
+                "symbolInfo" : {
+                  "_type" : {
+                    "_name" : "SourceCodeSymbolInfo"
+                  },
+                  "imageName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowTests"
+                  },
+                  "location" : {
+                    "_type" : {
+                      "_name" : "SourceCodeLocation"
+                    },
+                    "filePath" : {
+                      "_type" : {
+                        "_name" : "String"
+                      },
+                      "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+                    },
+                    "lineNumber" : {
+                      "_type" : {
+                        "_name" : "Int"
+                      },
+                      "_value" : "70"
+                    }
+                  },
+                  "symbolName" : {
+                    "_type" : {
+                      "_name" : "String"
+                    },
+                    "_value" : "FlowViewModelReferenceTests.testSyncReferenceOnTargetCompletion()"
+                  }
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382684132"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382629248"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599335008"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599334152"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382632272"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382622872"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382620640"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4382672768"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "4381833792"
+                }
+              },
+              {
+                "_type" : {
+                  "_name" : "SourceCodeFrame"
+                },
+                "addressString" : {
+                  "_type" : {
+                    "_name" : "String"
+                  },
+                  "_value" : "10599548988"
+                }
+              }
+            ]
+          },
+          "location" : {
+            "_type" : {
+              "_name" : "SourceCodeLocation"
+            },
+            "filePath" : {
+              "_type" : {
+                "_name" : "String"
+              },
+              "_value" : "\/Users\/wei\/source\/flow\/FlowTests\/FlowViewModelReferenceTests.swift"
+            },
+            "lineNumber" : {
+              "_type" : {
+                "_name" : "Int"
+              },
+              "_value" : "70"
+            }
+          }
+        },
+        "timestamp" : {
+          "_type" : {
+            "_name" : "Date"
+          },
+          "_value" : "2026-02-13T16:15:13.245+0100"
+        },
+        "uuid" : {
+          "_type" : {
+            "_name" : "String"
+          },
+          "_value" : "9C8B2E90-98B2-4519-A16C-937C6158CC55"
+        }
+      }
+    ]
+  },
+  "identifier" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "FlowViewModelReferenceTests\/testSyncReferenceOnTargetCompletion()"
+  },
+  "identifierURL" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "test:\/\/com.apple.xcode\/Flow\/FlowTests\/FlowViewModelReferenceTests\/testSyncReferenceOnTargetCompletion()"
+  },
+  "name" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "testSyncReferenceOnTargetCompletion()"
+  },
+  "testStatus" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "Failure"
+  }
+}

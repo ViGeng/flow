@@ -250,7 +250,10 @@ final class FlowViewModel {
     
     /// Count root-level tasks matching a given state.
     func count(for state: EventState) -> Int {
-        nodes.filter { $0.state == state }.count
+        if state == .waiting {
+            return allNodesFlat().filter { $0.state == .waiting && !$0.isReference }.count
+        }
+        return nodes.filter { $0.state == state }.count
     }
     
     /// All unique user tags across the entire tree (excluding system tags).
@@ -406,6 +409,7 @@ final class FlowViewModel {
         
         // Create reference node
         // Title matches target, referenceID points to anchor.
+        // STRICT: No other tags or metadata.
         let refNode = EventNode(
             title: target.title,
             tags: ["ref"], // Mark as ref for UI styling
@@ -430,34 +434,62 @@ final class FlowViewModel {
         return "\(safeTitle)-\(timestamp)"
     }
     
+    // MARK: - Sync State
+    
     /// Sync state of reference nodes with their targets.
     private func syncReferences() {
-        // 1. Build map of anchors
+        // 1. Build map of anchors from current nodes
         var anchorMap: [String: EventNode] = [:]
-        let all = allNodesFlat()
-        for node in all {
-            if let anchor = node.anchorID {
-                anchorMap[anchor] = node
+        
+        func collectAnchors(from nodes: [EventNode]) {
+            for node in nodes {
+                if let anchor = node.anchorID {
+                    anchorMap[anchor] = node
+                }
+                collectAnchors(from: node.children)
             }
         }
         
-        // 2. Update references
+        collectAnchors(from: nodes)
+        
+        // 2. Update references recursively
         var changed = false
         
         func updateRefs(in nodes: inout [EventNode]) {
             for i in nodes.indices {
+                // If this node is a reference, sync it strictly
                 if let refID = nodes[i].referenceID, let target = anchorMap[refID] {
-                    // Sync state
-                    if nodes[i].isChecked != target.isChecked {
-                        nodes[i].isChecked = target.isChecked
-                        changed = true
-                    }
-                    // Sync title (optional, but good for consistency)
+                    // 1. Sync Title
                     if nodes[i].title != target.title {
                         nodes[i].title = target.title
                         changed = true
                     }
+                    
+                    // 2. Sync Checked State
+                    if nodes[i].isChecked != target.isChecked {
+                        nodes[i].isChecked = target.isChecked
+                        changed = true
+                    }
+                    
+                    // 3. Sync Tags (STRICT: only "ref")
+                    // If target is waiting, the ref *should* block. 
+                    // But our model says: if tags.contains("ref"), it returns .waiting (blocking).
+                    // So we don't need to copy "wait" tag. 
+                    // We just ensure it has "ref" and nothing else.
+                    let expectedTags = ["ref"]
+                    if nodes[i].tags != expectedTags {
+                        nodes[i].tags = expectedTags
+                        changed = true
+                    }
+                    
+                    // 4. Sync Metadata (STRICT: empty)
+                    if !nodes[i].metadata.isEmpty {
+                        nodes[i].metadata = [:]
+                        changed = true
+                    }
                 }
+                
+                // Recurse into children
                 updateRefs(in: &nodes[i].children)
             }
         }
@@ -626,7 +658,8 @@ final class FlowViewModel {
         for match in matches {
             if let range = Range(match.range(at: 1), in: text) {
                 let tag = String(text[range]).lowercased()
-                if tag != "wait" && tag != "ref" && !tags.contains(tag) {
+                // We allow "wait" as it's user-toggleable. "ref" is system-only.
+                if tag != "ref" && !tags.contains(tag) {
                     tags.append(tag)
                 }
             }
@@ -654,8 +687,9 @@ final class FlowViewModel {
         
         mutateNode(id: nodeID, in: &nodes) { n in
             n.title = cleanTitle
-            // Merge: keep existing system tags, replace user tags
-            let systemTags = n.tags.filter { $0 == "wait" || $0 == "ref" }
+            // Merge: keep ref (system only), replace others with parsed tags
+            // Since "wait" is now parsed from text, we don't treat it as "invisible" system tag.
+            let systemTags = n.tags.filter { $0 == "ref" }
             n.tags = systemTags + newTags
         }
         saveNodes()

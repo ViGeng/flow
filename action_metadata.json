@@ -1,0 +1,46 @@
+{
+  "_type" : {
+    "_name" : "ActionsInvocationMetadata"
+  },
+  "creatingWorkspaceFilePath" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "\/Users\/wei\/source\/flow\/Flow.xcodeproj"
+  },
+  "schemeIdentifier" : {
+    "_type" : {
+      "_name" : "EntityIdentifier"
+    },
+    "containerName" : {
+      "_type" : {
+        "_name" : "String"
+      },
+      "_value" : "Flow project"
+    },
+    "entityName" : {
+      "_type" : {
+        "_name" : "String"
+      },
+      "_value" : "Flow"
+    },
+    "entityType" : {
+      "_type" : {
+        "_name" : "String"
+      },
+      "_value" : "scheme"
+    },
+    "sharedState" : {
+      "_type" : {
+        "_name" : "String"
+      },
+      "_value" : "shared"
+    }
+  },
+  "uniqueIdentifier" : {
+    "_type" : {
+      "_name" : "String"
+    },
+    "_value" : "20E62186-A2D1-4B37-A739-8E7BA91A83B8"
+  }
+}
