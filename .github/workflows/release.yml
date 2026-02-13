@@ -1,0 +1,111 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-15
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set version from tag
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project Flow.xcodeproj \
+            -scheme Flow \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination 'platform=macOS' \
+            MARKETING_VERSION=${{ env.VERSION }} \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Create DMG
+        run: |
+          APP_PATH="build/Build/Products/Release/Flow.app"
+          DMG_PATH="Flow-${{ env.VERSION }}.dmg"
+
+          mkdir -p dmg_staging
+          cp -R "$APP_PATH" dmg_staging/
+          ln -s /Applications dmg_staging/Applications
+
+          hdiutil create -volname "Flow" \
+            -srcfolder dmg_staging \
+            -ov -format UDZO \
+            "$DMG_PATH"
+
+          echo "DMG_PATH=$DMG_PATH" >> $GITHUB_ENV
+          shasum -a 256 "$DMG_PATH" | awk '{print $1}' > sha256.txt
+          echo "SHA256=$(cat sha256.txt)" >> $GITHUB_ENV
+
+      - name: Create ZIP
+        run: |
+          APP_PATH="build/Build/Products/Release/Flow.app"
+          ZIP_PATH="Flow-${{ env.VERSION }}.zip"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_PATH"
+          echo "ZIP_PATH=$ZIP_PATH" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.DMG_PATH }}
+            ${{ env.ZIP_PATH }}
+          generate_release_notes: true
+
+      - name: Update Homebrew tap
+        if: "!contains(github.ref, 'beta')"
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          if [ -z "$HOMEBREW_TAP_TOKEN" ]; then
+            echo "HOMEBREW_TAP_TOKEN not set, skipping tap update"
+            exit 0
+          fi
+
+          SHA256=${{ env.SHA256 }}
+          VERSION=${{ env.VERSION }}
+          DOWNLOAD_URL="https://github.com/ViGeng/flow/releases/download/v${VERSION}/Flow-${VERSION}.dmg"
+
+          git clone https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/ViGeng/homebrew-flow.git tap
+          mkdir -p tap/Casks
+
+          cat > tap/Casks/flow.rb << EOF
+          cask "flow" do
+            version "${VERSION}"
+            sha256 "${SHA256}"
+
+            url "${DOWNLOAD_URL}"
+            name "Flow"
+            desc "Event-driven task manager backed by a recursive Markdown tree"
+            homepage "https://github.com/ViGeng/flow"
+
+            app "Flow.app"
+
+            zap trash: [
+              "~/Library/Preferences/com.vigeng.Flow.plist",
+              "~/Library/Application Support/Flow",
+            ]
+          end
+          EOF
+
+          cd tap
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update Flow to v${VERSION}" || true
+          git push

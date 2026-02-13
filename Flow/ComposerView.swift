@@ -1,0 +1,134 @@
+//
+//  ComposerView.swift
+//  Flow
+//
+//  Bottom input bar. Text input + Add button + event search autocomplete.
+//  Typing in the field shows matching existing events to add as task references.
+//
+
+import SwiftUI
+
+/// The bottom input bar for creating new events and adding task references.
+struct ComposerView: View {
+    @Bindable var viewModel: FlowViewModel
+    
+    @State private var eventTitle: String = ""
+    @State private var showSearchResults = false
+    
+    private var hasSelection: Bool {
+        viewModel.selectedNodeID != nil
+    }
+    
+    /// Search results matching current input text.
+    private var searchResults: [EventNode] {
+        guard hasSelection, eventTitle.count >= 2 else { return [] }
+        return viewModel.searchNodes(query: eventTitle)
+            .prefix(6)
+            .map { $0 }
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Search results dropdown (above the input)
+            if showSearchResults && !searchResults.isEmpty {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        Text("Link existing event")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text("⏎ to add new")
+                            .font(.system(size: 10))
+                            .foregroundColor(.secondary.opacity(0.6))
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.top, 6)
+                    .padding(.bottom, 4)
+                    
+                    ForEach(searchResults) { result in
+                        Button {
+                            addReference(result)
+                        } label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: "link")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.accentColor)
+                                
+                                Text(result.title)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.primary)
+                                    .lineLimit(1)
+                                
+                                Spacer()
+                                
+                                Text(result.state.displayName)
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 1)
+                                    .background(.quaternary, in: Capsule())
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .background(Color.accentColor.opacity(0.04))
+                    }
+                }
+                .background(.background.secondary)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 16)
+                .padding(.bottom, 4)
+            }
+            
+            Divider()
+            
+            HStack(spacing: 10) {
+                // Input field
+                TextField(
+                    hasSelection ? "Add event or search to link..." : "Add top-level event...",
+                    text: $eventTitle
+                )
+                .textFieldStyle(.plain)
+                .font(.system(size: 13))
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(.background.secondary, in: RoundedRectangle(cornerRadius: 8))
+                .onSubmit { addEvent() }
+                .onChange(of: eventTitle) { _, newValue in
+                    showSearchResults = hasSelection && newValue.count >= 2
+                }
+                
+                // [+ Add]
+                Button(action: addEvent) {
+                    Label("Add", systemImage: "plus")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+                .disabled(eventTitle.trimmingCharacters(in: .whitespaces).isEmpty)
+                .help(hasSelection ? "Add as child of selected" : "Add at root level")
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+        .background(.background)
+    }
+    
+    // MARK: - Actions
+    
+    private func addEvent() {
+        viewModel.addNode(title: eventTitle)
+        eventTitle = ""
+        showSearchResults = false
+    }
+    
+    /// Add a reference to an existing event as a blocking child.
+    private func addReference(_ referencedNode: EventNode) {
+        guard let parentID = viewModel.selectedNodeID else { return }
+        viewModel.addTaskReference(to: parentID, referencedTitle: referencedNode.title)
+        eventTitle = ""
+        showSearchResults = false
+    }
+}
