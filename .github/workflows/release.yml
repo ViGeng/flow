@@ -95,6 +95,12 @@ jobs:
             homepage "https://github.com/ViGeng/flow"
 
             app "Flow.app"
+          
+            postflight do
+              system_command "xattr",
+                             args: ["-rd", "com.apple.quarantine", "#{appdir}/Flow.app"],
+                             sudo: false
+            end
 
             zap trash: [
               "~/Library/Preferences/com.vigeng.Flow.plist",
