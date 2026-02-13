@@ -751,8 +751,12 @@ final class FlowViewModel {
         guard !raw.isEmpty else { return }
         
         // Extract tags from text
-        let (cleanTitle, tags) = Self.extractTags(from: raw)
-        guard !cleanTitle.isEmpty else { return }
+        var (cleanTitle, tags) = Self.extractTags(from: raw)
+        
+        // If title became empty (e.g. input was just "#urgent"), revert to raw text
+        if cleanTitle.isEmpty {
+            cleanTitle = raw
+        }
         
         let newNode = EventNode(title: cleanTitle, tags: tags)
         
@@ -798,8 +802,12 @@ final class FlowViewModel {
         let raw = newTitle.trimmingCharacters(in: .whitespaces)
         guard !raw.isEmpty else { return }
         
-        let (cleanTitle, newTags) = Self.extractTags(from: raw)
-        guard !cleanTitle.isEmpty else { return }
+        var (cleanTitle, newTags) = Self.extractTags(from: raw)
+        
+        // If title became empty (e.g. renamed to "#done"), keep it as is
+        if cleanTitle.isEmpty {
+            cleanTitle = raw
+        }
         
         mutateNode(id: nodeID, in: &nodes) { n in
             n.title = cleanTitle
