@@ -44,12 +44,12 @@ Traditional todo apps hide your data in proprietary formats. Flow stores everyth
 ### Homebrew
 
 ```bash
-brew tap ViGeng/flow
+brew tap ViGeng/tap
 brew install --cask flow
 ```
 
 > [!TIP]
-> If you encounter a naming conflict with the standard `flow` formula, you can use the fully qualified name: `brew install --cask vigeng/flow/flow`.
+> If you encounter a naming conflict with the standard `flow` formula, you can use the fully qualified name: `brew install --cask vigeng/tap/flow`.
 
 ### Manual
 

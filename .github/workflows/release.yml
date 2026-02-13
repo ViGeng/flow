@@ -81,7 +81,7 @@ jobs:
           VERSION=${{ env.VERSION }}
           DOWNLOAD_URL="https://github.com/ViGeng/flow/releases/download/v${VERSION}/Flow-${VERSION}.dmg"
 
-          git clone https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/ViGeng/homebrew-flow.git tap
+          git clone https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/ViGeng/homebrew-tap.git tap
           mkdir -p tap/Casks
 
           cat > tap/Casks/flow.rb << EOF
