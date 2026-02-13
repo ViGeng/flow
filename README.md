@@ -6,6 +6,7 @@ A native macOS task manager built with SwiftUI. Tasks are stored as a **recursiv
 
 Key philosophy:
 - This app serves as a task/event flow friendly viewer/editor for markdown file. so this app is regarded as an flow-augmented markdown editor and viewer.
+- It also serves as a work log that streamlines what is happening along side the task/event flow.
 
 ## TODOs
 

@@ -10,6 +10,13 @@ import Combine
 import AppKit
 import ServiceManagement
 
+/// Safe subscript for collections.
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
+}
+
 /// ViewModel for the Flow app. Manages the recursive EventNode tree.
 @Observable
 @MainActor
@@ -17,8 +24,20 @@ final class FlowViewModel {
     
     // MARK: - State
     
-    /// The top-level event nodes (the full tree).
-    var nodes: [EventNode] = []
+    /// All sections (each has a name + nodes).
+    var sections: [Section] = [Section()]
+    
+    /// Currently selected section tab index.
+    var selectedSectionIndex: Int = 0
+    
+    /// Convenience: nodes of the active section.
+    var nodes: [EventNode] {
+        get { sections[safe: selectedSectionIndex]?.nodes ?? [] }
+        set {
+            guard sections.indices.contains(selectedSectionIndex) else { return }
+            sections[selectedSectionIndex].nodes = newValue
+        }
+    }
     
     /// Currently selected node ID.
     var selectedNodeID: UUID?
@@ -243,6 +262,39 @@ final class FlowViewModel {
         }
     }
     
+    // MARK: - Section Management
+    
+    func addSection(name: String) {
+        let newSection = Section(name: name, nodes: [])
+        sections.append(newSection)
+        selectedSectionIndex = sections.count - 1
+        saveNodes()
+    }
+    
+    func renameSection(index: Int, name: String) {
+        guard sections.indices.contains(index) else { return }
+        sections[index].name = name
+        saveNodes()
+    }
+    
+    func deleteSection(index: Int) {
+        guard sections.indices.contains(index) else { return }
+        sections.remove(at: index)
+        
+        // Adjust selection if needed
+        if selectedSectionIndex >= sections.count {
+            selectedSectionIndex = max(0, sections.count - 1)
+        }
+        
+        // Ensure at least one section exists
+        if sections.isEmpty {
+            sections = [Section()]
+            selectedSectionIndex = 0
+        }
+        
+        saveNodes()
+    }
+
     // MARK: - Computed Properties (Root-Level Counts)
     
     /// Count of root-level tasks only.
@@ -351,6 +403,15 @@ final class FlowViewModel {
         return result
     }
     
+    /// All nodes across ALL sections (for cross-section references).
+    private func allNodesFlatGlobal() -> [EventNode] {
+        var result: [EventNode] = []
+        for section in sections {
+            collectNodes(from: section.nodes, into: &result)
+        }
+        return result
+    }
+    
     private func collectNodes(from nodes: [EventNode], into result: inout [EventNode]) {
         for node in nodes {
             result.append(node)
@@ -361,18 +422,19 @@ final class FlowViewModel {
     func searchNodes(query: String) -> [EventNode] {
         guard !query.isEmpty else { return [] }
         let q = query.lowercased()
-        return allNodesFlat().filter {
-            $0.title.lowercased().contains(q) && !$0.isChecked
+        return allNodesFlatGlobal().filter {
+            $0.title.lowercased().contains(q) && !$0.isChecked && !$0.isReference
         }
     }
     
     /// Navigate to the target of a reference node.
     func jumpToTarget(from referenceNodeID: UUID) {
-        guard let refNode = findNode(id: referenceNodeID, in: nodes),
+        guard let refNode = findNodeGlobal(id: referenceNodeID),
               let targetID = refNode.referenceID else { return }
         
-        // Find node with matching anchorID
-        if let target = findNodeByAnchor(targetID, in: nodes) {
+        // Find node with matching anchorID across sections.
+        if let (target, sectionIndex) = findNodeByAnchorGlobal(targetID) {
+            selectedSectionIndex = sectionIndex
             selectedNodeID = target.id
             activeFilter = nil
             searchQuery = ""
@@ -387,19 +449,49 @@ final class FlowViewModel {
         return nil
     }
     
+    private func findNodeGlobal(id: UUID) -> EventNode? {
+        for section in sections {
+            if let found = findNode(id: id, in: section.nodes) {
+                return found
+            }
+        }
+        return nil
+    }
+    
+    private func findNodeByAnchorGlobal(_ anchorID: String) -> (node: EventNode, sectionIndex: Int)? {
+        for index in sections.indices {
+            if let found = findNodeByAnchor(anchorID, in: sections[index].nodes) {
+                return (found, index)
+            }
+        }
+        return nil
+    }
+    
     /// Add a reference to an existing event.
     /// Ensures target has an anchor ID, then creates a linking node.
     func addTaskReference(to parentID: UUID, referencedTitle: String) {
-        // Find target node (by title since we don't have ID yet)
-        guard let targetIdx = allNodesFlat().firstIndex(where: { $0.title == referencedTitle }) else { return }
-        var target = allNodesFlat()[targetIdx]
+        // Find first concrete (non-reference) target globally.
+        guard let target = allNodesFlatGlobal().first(where: {
+            $0.title == referencedTitle && !$0.isReference
+        }) else { return }
+        addTaskReference(to: parentID, targetNodeID: target.id)
+    }
+    
+    /// Add a reference to an existing event by stable node ID.
+    /// This avoids title-collision bugs and prevents linking to reference nodes.
+    func addTaskReference(to parentID: UUID, targetNodeID: UUID) {
+        guard var target = allNodesFlatGlobal().first(where: { $0.id == targetNodeID }),
+              !target.isReference else { return }
         
         // Ensure target has an anchor ID
         if target.anchorID == nil {
             let newAnchor = generateAnchorID(from: target.title)
-            // We need to mutate the actual node in the tree
-            mutateNode(id: target.id, in: &nodes) { n in
-                n.anchorID = newAnchor
+            // We need to mutate the actual node in the tree (search all sections)
+            for i in sections.indices {
+                let found = mutateNode(id: target.id, in: &sections[i].nodes, { n in
+                    n.anchorID = newAnchor
+                })
+                if found { break }
             }
             // Update local copy
             target.anchorID = newAnchor
@@ -416,9 +508,17 @@ final class FlowViewModel {
             referenceID: anchorID
         )
         
-        mutateNode(id: parentID, in: &nodes) { parent in
-            parent.children.append(refNode)
+        var didInsert = false
+        for i in sections.indices {
+            let found = mutateNode(id: parentID, in: &sections[i].nodes) { parent in
+                parent.children.append(refNode)
+            }
+            if found {
+                didInsert = true
+                break
+            }
         }
+        guard didInsert else { return }
         
         syncReferences()
         saveNodes()
@@ -438,65 +538,78 @@ final class FlowViewModel {
     
     /// Sync state of reference nodes with their targets.
     private func syncReferences() {
-        // 1. Build map of anchors from current nodes
+        // 1. Build map of anchors from ALL sections
         var anchorMap: [String: EventNode] = [:]
         
         func collectAnchors(from nodes: [EventNode]) {
             for node in nodes {
-                if let anchor = node.anchorID {
+                // Anchors are owned by concrete nodes, not reference nodes.
+                if node.referenceID == nil, let anchor = node.anchorID {
                     anchorMap[anchor] = node
                 }
                 collectAnchors(from: node.children)
             }
         }
         
-        collectAnchors(from: nodes)
+        for section in sections {
+            collectAnchors(from: section.nodes)
+        }
         
-        // 2. Update references recursively
-        var changed = false
+        // 2. Sync valid references and prune dangling references whose targets no longer exist.
+        var referencedAnchors = Set<String>()
         
-        func updateRefs(in nodes: inout [EventNode]) {
-            for i in nodes.indices {
-                // If this node is a reference, sync it strictly
-                if let refID = nodes[i].referenceID, let target = anchorMap[refID] {
-                    // 1. Sync Title
-                    if nodes[i].title != target.title {
-                        nodes[i].title = target.title
-                        changed = true
+        func updateAndPruneRefs(in nodes: inout [EventNode]) {
+            var index = 0
+            while index < nodes.count {
+                if let refID = nodes[index].referenceID {
+                    guard let target = anchorMap[refID] else {
+                        // Target deleted (or missing): drop the dangling reference node.
+                        nodes.remove(at: index)
+                        continue
                     }
                     
-                    // 2. Sync Checked State
-                    if nodes[i].isChecked != target.isChecked {
-                        nodes[i].isChecked = target.isChecked
-                        changed = true
-                    }
+                    referencedAnchors.insert(refID)
                     
-                    // 3. Sync Tags (STRICT: only "ref")
-                    // If target is waiting, the ref *should* block. 
-                    // But our model says: if tags.contains("ref"), it returns .waiting (blocking).
-                    // So we don't need to copy "wait" tag. 
-                    // We just ensure it has "ref" and nothing else.
+                    if nodes[index].title != target.title {
+                        nodes[index].title = target.title
+                    }
+                    if nodes[index].isChecked != target.isChecked {
+                        nodes[index].isChecked = target.isChecked
+                    }
                     let expectedTags = ["ref"]
-                    if nodes[i].tags != expectedTags {
-                        nodes[i].tags = expectedTags
-                        changed = true
+                    if nodes[index].tags != expectedTags {
+                        nodes[index].tags = expectedTags
                     }
-                    
-                    // 4. Sync Metadata (STRICT: empty)
-                    if !nodes[i].metadata.isEmpty {
-                        nodes[i].metadata = [:]
-                        changed = true
+                    if !nodes[index].metadata.isEmpty {
+                        nodes[index].metadata = [:]
+                    }
+                    if nodes[index].anchorID != nil {
+                        nodes[index].anchorID = nil
                     }
                 }
                 
-                // Recurse into children
-                updateRefs(in: &nodes[i].children)
+                updateAndPruneRefs(in: &nodes[index].children)
+                index += 1
             }
         }
         
-        updateRefs(in: &nodes)
+        for i in sections.indices {
+            updateAndPruneRefs(in: &sections[i].nodes)
+        }
         
-        // Note: mutation happens in place. Caller usually calls saveNodes() after.
+        // 3. Clear anchor IDs that no remaining reference points to.
+        func clearUnusedAnchors(in nodes: inout [EventNode]) {
+            for i in nodes.indices {
+                if let anchor = nodes[i].anchorID, !referencedAnchors.contains(anchor) {
+                    nodes[i].anchorID = nil
+                }
+                clearUnusedAnchors(in: &nodes[i].children)
+            }
+        }
+        
+        for i in sections.indices {
+            clearUnusedAnchors(in: &sections[i].nodes)
+        }
     }
     
     // MARK: - Tag Management
@@ -530,13 +643,16 @@ final class FlowViewModel {
         coordinator.coordinate(readingItemAt: fileURL, options: [], error: &error) { url in
             do {
                 let content = try String(contentsOf: url, encoding: .utf8)
-                self.nodes = MarkdownParser.parse(content)
+                self.sections = MarkdownParser.parseSections(content)
                 self.syncReferences() // Sync on load
+                if self.selectedSectionIndex >= self.sections.count {
+                    self.selectedSectionIndex = 0
+                }
                 self.errorMessage = nil
                 self.needsFolderPicker = false
             } catch {
                 if (error as NSError).code == NSFileReadNoSuchFileError {
-                    self.nodes = []
+                    self.sections = [Section()]
                     self.errorMessage = nil
                 } else {
                     self.errorMessage = "Failed to load: \(error.localizedDescription)"
@@ -554,7 +670,7 @@ final class FlowViewModel {
         
         let coordinator = NSFileCoordinator()
         var error: NSError?
-        let content = MarkdownParser.serialize(nodes)
+        let content = MarkdownParser.serializeSections(sections)
         
         coordinator.coordinate(writingItemAt: fileURL, options: .forReplacing, error: &error) { url in
             do {

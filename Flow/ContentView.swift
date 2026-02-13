@@ -10,6 +10,12 @@ import SwiftUI
 struct ContentView: View {
     @Bindable var viewModel: FlowViewModel
     
+    // Section Management
+    @State private var isAddingSection = false
+    @State private var isRenamingSection = false
+    @State private var sectionNameInput = ""
+    @State private var sectionToRenameIndex: Int?
+    
     var body: some View {
         NavigationSplitView {
             sidebarView
@@ -22,12 +28,31 @@ struct ContentView: View {
                 viewModel.chooseStorageDirectory()
             }
         }
+        .alert("New Section", isPresented: $isAddingSection) {
+            TextField("Section Name", text: $sectionNameInput)
+            Button("Cancel", role: .cancel) { }
+            Button("Add") {
+                viewModel.addSection(name: sectionNameInput)
+                sectionNameInput = ""
+            }
+        }
+        .alert("Rename Section", isPresented: $isRenamingSection) {
+            TextField("Section Name", text: $sectionNameInput)
+            Button("Cancel", role: .cancel) { }
+            Button("Rename") {
+                if let index = sectionToRenameIndex {
+                    viewModel.renameSection(index: index, name: sectionNameInput)
+                }
+                sectionNameInput = ""
+                sectionToRenameIndex = nil
+            }
+        }
     }
     
     // MARK: - Sidebar
     
-    private var sidebarView: some View {
-        List(selection: Binding(
+    private var sidebarSelectionBinding: Binding<String> {
+        Binding(
             get: { viewModel.activeFilter.map { $0.rawValue } ?? "all" },
             set: { newValue in
                 withAnimation(.easeInOut(duration: 0.2)) {
@@ -38,57 +63,14 @@ struct ContentView: View {
                     }
                 }
             }
-        )) {
-            Section("Overview") {
-                sidebarRow(id: "all", label: "All Tasks", icon: "tray.full", count: viewModel.totalTaskCount, color: .primary)
-                sidebarRow(id: EventState.active.rawValue, label: "Active", icon: "bolt.fill", count: viewModel.count(for: .active), color: .blue)
-                sidebarRow(id: EventState.waiting.rawValue, label: "Waiting", icon: "clock.fill", count: viewModel.count(for: .waiting), color: .orange)
-                sidebarRow(id: EventState.blocked.rawValue, label: "Blocked", icon: "lock.fill", count: viewModel.count(for: .blocked), color: .gray)
-                sidebarRow(id: EventState.completed.rawValue, label: "Completed", icon: "checkmark.circle.fill", count: viewModel.count(for: .completed), color: .green)
-            }
-            
-            if !viewModel.allTags.isEmpty {
-                Section("Tags") {
-                    ForEach(viewModel.allTags, id: \.self) { tag in
-                        Button {
-                            withAnimation {
-                                viewModel.tagFilter = viewModel.tagFilter == tag ? nil : tag
-                            }
-                        } label: {
-                            HStack {
-                                Text("#\(tag)")
-                                    .font(.system(size: 12))
-                                Spacer()
-                                if viewModel.tagFilter == tag {
-                                    Image(systemName: "checkmark")
-                                        .font(.system(size: 10))
-                                        .foregroundColor(.accentColor)
-                                }
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-            
-            Section("Settings") {
-                Toggle("Start at Login", isOn: Bindable(viewModel).startsAtLogin)
-                    .font(.system(size: 12))
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(viewModel.storageDirectory)
-                        .font(.system(size: 10))
-                        .foregroundColor(.secondary)
-                        .lineLimit(2)
-                    
-                    Button("Change Folder…") {
-                        viewModel.chooseStorageDirectory()
-                    }
-                    .font(.system(size: 11))
-                    .buttonStyle(.bordered)
-                    .controlSize(.mini)
-                }
-            }
+        )
+    }
+    
+    private var sidebarView: some View {
+        List(selection: sidebarSelectionBinding) {
+            overviewSection
+            tagsSection
+            settingsSection
         }
         .listStyle(.sidebar)
         .navigationSplitViewColumnWidth(min: 180, ideal: 200, max: 250)
@@ -98,6 +80,66 @@ struct ContentView: View {
                     Label("Reload", systemImage: "arrow.clockwise")
                 }
                 .help("Reload from file")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var overviewSection: some View {
+        SwiftUI.Section("Overview") {
+            sidebarRow(id: "all", label: "All Tasks", icon: "tray.full", count: viewModel.totalTaskCount, color: .primary)
+            sidebarRow(id: EventState.active.rawValue, label: "Active", icon: "bolt.fill", count: viewModel.count(for: .active), color: .blue)
+            sidebarRow(id: EventState.waiting.rawValue, label: "Waiting", icon: "clock.fill", count: viewModel.count(for: .waiting), color: .orange)
+            sidebarRow(id: EventState.blocked.rawValue, label: "Blocked", icon: "lock.fill", count: viewModel.count(for: .blocked), color: .gray)
+            sidebarRow(id: EventState.completed.rawValue, label: "Completed", icon: "checkmark.circle.fill", count: viewModel.count(for: .completed), color: .green)
+        }
+    }
+    
+    @ViewBuilder
+    private var tagsSection: some View {
+        if !viewModel.allTags.isEmpty {
+            SwiftUI.Section("Tags") {
+                ForEach(viewModel.allTags, id: \.self) { tag in
+                    Button {
+                        withAnimation {
+                            viewModel.tagFilter = viewModel.tagFilter == tag ? nil : tag
+                        }
+                    } label: {
+                        HStack {
+                            Text("#\(tag)")
+                                .font(.system(size: 12))
+                            Spacer()
+                            if viewModel.tagFilter == tag {
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var settingsSection: some View {
+        SwiftUI.Section("Settings") {
+            Toggle("Start at Login", isOn: Bindable(viewModel).startsAtLogin)
+                .font(.system(size: 12))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(viewModel.storageDirectory)
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
+                
+                Button("Change Folder…") {
+                    viewModel.chooseStorageDirectory()
+                }
+                .font(.system(size: 11))
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
             }
         }
     }
@@ -195,6 +237,10 @@ struct ContentView: View {
             
             Divider()
             
+            // Section tabs
+            sectionTabBar
+            Divider()
+            
             // Tree content
             if viewModel.filteredNodes.isEmpty {
                 emptyStateView
@@ -215,6 +261,65 @@ struct ContentView: View {
             }
             
             ComposerView(viewModel: viewModel)
+        }
+    }
+    
+    // MARK: - Section Tab Bar
+    
+    private var sectionTabBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 6) {
+                ForEach(viewModel.sections.indices, id: \.self) { index in
+                    sectionTab(for: index)
+                }
+                
+                // Add Section Button
+                Button {
+                    sectionNameInput = ""
+                    isAddingSection = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 10, weight: .bold))
+                        .padding(6)
+                        .background(Color.secondary.opacity(0.1), in: Circle())
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .padding(.leading, 4)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+        }
+        .background(.background)
+    }
+    
+    private func sectionTab(for index: Int) -> some View {
+        let section = viewModel.sections[index]
+        let isSelected = viewModel.selectedSectionIndex == index
+        let label = section.name.isEmpty ? "General" : section.name
+        
+        return Button {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                viewModel.selectedSectionIndex = index
+            }
+        } label: {
+            Text(label)
+                .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(isSelected ? Color.accentColor.opacity(0.12) : Color.clear, in: Capsule())
+                .foregroundColor(isSelected ? .accentColor : .secondary)
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            Button("Rename") {
+                sectionNameInput = section.name
+                sectionToRenameIndex = index
+                isRenamingSection = true
+            }
+            Button("Delete", role: .destructive) {
+                viewModel.deleteSection(index: index)
+            }
         }
     }
     

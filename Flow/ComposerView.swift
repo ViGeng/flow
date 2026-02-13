@@ -140,7 +140,8 @@ struct ComposerView: View {
         }
         
         // 2. If exact match exists (even if not shown), pick it
-        if let match = viewModel.allNodesFlat().first(where: { $0.title.lowercased() == eventTitle.lowercased() }) {
+        if let match = viewModel.searchNodes(query: eventTitle)
+            .first(where: { $0.title.lowercased() == eventTitle.lowercased() }) {
             addReference(match)
             return
         }
@@ -152,7 +153,7 @@ struct ComposerView: View {
     /// Add a reference to an existing event as a blocking child.
     private func addReference(_ referencedNode: EventNode) {
         guard let parentID = viewModel.selectedNodeID else { return }
-        viewModel.addTaskReference(to: parentID, referencedTitle: referencedNode.title)
+        viewModel.addTaskReference(to: parentID, targetNodeID: referencedNode.id)
         eventTitle = ""
         showSearchResults = false
     }

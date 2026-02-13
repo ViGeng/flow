@@ -142,3 +142,17 @@ struct EventNode: Identifiable, Codable, Equatable {
         return fmt
     }()
 }
+
+/// A named section grouping top-level EventNodes.
+/// Maps to `## Heading` in the Markdown file.
+struct Section: Identifiable, Equatable {
+    var id: UUID = UUID()
+    var name: String
+    var nodes: [EventNode]
+    
+    init(id: UUID = UUID(), name: String = "", nodes: [EventNode] = []) {
+        self.id = id
+        self.name = name
+        self.nodes = nodes
+    }
+}

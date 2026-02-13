@@ -208,6 +208,81 @@ struct MarkdownParserTests {
     }
 }
 
+// MARK: - Section Tests
+
+struct SectionParserTests {
+    
+    @Test func parseSections_noHeadings() throws {
+        let markdown = "- [ ] Task A\n- [ ] Task B\n"
+        let sections = MarkdownParser.parseSections(markdown)
+        #expect(sections.count == 1)
+        #expect(sections[0].name == "")
+        #expect(sections[0].nodes.count == 2)
+    }
+    
+    @Test func parseSections_multipleHeadings() throws {
+        let markdown = """
+        ## Work
+        - [ ] Task A
+        - [ ] Task B
+        ## Life
+        - [ ] Exercise
+        - [x] Read book
+        """
+        let sections = MarkdownParser.parseSections(markdown)
+        #expect(sections.count == 2)
+        #expect(sections[0].name == "Work")
+        #expect(sections[0].nodes.count == 2)
+        #expect(sections[0].nodes[0].title == "Task A")
+        #expect(sections[1].name == "Life")
+        #expect(sections[1].nodes.count == 2)
+        #expect(sections[1].nodes[1].isChecked == true)
+    }
+    
+    @Test func parseSections_withTasksBeforeHeading() throws {
+        let markdown = """
+        - [ ] Uncategorized
+        ## Work
+        - [ ] Task A
+        """
+        let sections = MarkdownParser.parseSections(markdown)
+        #expect(sections.count == 2)
+        #expect(sections[0].name == "")
+        #expect(sections[0].nodes.count == 1)
+        #expect(sections[1].name == "Work")
+        #expect(sections[1].nodes.count == 1)
+    }
+    
+    @Test func parseSections_emptyFile() throws {
+        let sections = MarkdownParser.parseSections("")
+        #expect(sections.count == 1)
+        #expect(sections[0].name == "")
+        #expect(sections[0].nodes.isEmpty)
+    }
+    
+    @Test func serializeSections_roundTrip() throws {
+        let markdown = """
+        ## Work
+        
+        - [ ] Task A
+        - [ ] Task B
+        
+        ## Life
+        
+        - [ ] Exercise
+        """
+        let sections = MarkdownParser.parseSections(markdown)
+        let serialized = MarkdownParser.serializeSections(sections)
+        let reparsed = MarkdownParser.parseSections(serialized)
+        
+        #expect(reparsed.count == sections.count)
+        for i in reparsed.indices {
+            #expect(reparsed[i].name == sections[i].name)
+            #expect(reparsed[i].nodes.count == sections[i].nodes.count)
+        }
+    }
+}
+
 // MARK: - State Propagation Tests
 
 struct EventStateTests {

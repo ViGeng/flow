@@ -115,7 +115,8 @@ struct MarkdownParser {
         
         // Extract tags: #word patterns
         var tags: [String] = []
-        let tagRegex = try! NSRegularExpression(pattern: #"#(\w+)"#)
+        // Ignore anchor fragments inside markdown links, e.g. "(#target-123)".
+        let tagRegex = try! NSRegularExpression(pattern: #"(?<!\()#(\w+)"#)
         let tagMatches = tagRegex.matches(in: remaining, range: NSRange(remaining.startIndex..., in: remaining))
         for match in tagMatches {
             if let range = Range(match.range(at: 1), in: remaining) {
@@ -250,5 +251,65 @@ struct MarkdownParser {
         for child in node.children {
             serializeNode(child, depth: depth + 1, into: &lines)
         }
+    }
+    
+    // MARK: - Section Parsing
+    
+    /// Parse a Markdown string into sections delimited by `## Heading` lines.
+    /// Tasks before any `##` go into a default section with an empty name.
+    static func parseSections(_ text: String) -> [Section] {
+        let lines = text.components(separatedBy: .newlines)
+        var sections: [Section] = []
+        var currentName = ""
+        var currentLines: [String] = []
+        
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.hasPrefix("## ") {
+                // Flush previous section
+                let content = currentLines.joined(separator: "\n")
+                let nodes = parse(content)
+                if !nodes.isEmpty || !currentName.isEmpty {
+                    sections.append(Section(name: currentName, nodes: nodes))
+                }
+                currentName = String(trimmed.dropFirst(3)).trimmingCharacters(in: .whitespaces)
+                currentLines = []
+            } else {
+                currentLines.append(line)
+            }
+        }
+        
+        // Flush last section
+        let content = currentLines.joined(separator: "\n")
+        let nodes = parse(content)
+        if !nodes.isEmpty || !currentName.isEmpty {
+            sections.append(Section(name: currentName, nodes: nodes))
+        }
+        
+        // If empty file, return one default section
+        if sections.isEmpty {
+            sections.append(Section(name: "", nodes: []))
+        }
+        
+        return sections
+    }
+    
+    /// Serialize an array of sections to Markdown with `## Heading` delimiters.
+    static func serializeSections(_ sections: [Section]) -> String {
+        var result = ""
+        for (i, section) in sections.enumerated() {
+            if !section.name.isEmpty {
+                if i > 0 { result += "\n" }
+                result += "## \(section.name)\n\n"
+            }
+            if !section.nodes.isEmpty {
+                result += serialize(section.nodes)
+            }
+        }
+        // Ensure trailing newline
+        if !result.hasSuffix("\n") {
+            result += "\n"
+        }
+        return result
     }
 }
