@@ -2,6 +2,8 @@
 
 A native macOS task manager built with SwiftUI. Tasks are stored as a **recursive tree** in a single Markdown file — compatible with iCloud, Obsidian, and any text editor.
 
+![Preview](/doc-assents/previwe-screenshot.png)
+
 Key philosophy:
 - This app serves as a task/event flow friendly viewer/editor for markdown file. so this app is regarded as an flow-augmented markdown editor and viewer.
 
@@ -39,10 +41,15 @@ Traditional todo apps hide your data in proprietary formats. Flow stores everyth
 
 ### Homebrew
 
+### Homebrew
+
 ```bash
 brew tap ViGeng/flow
 brew install --cask flow
 ```
+
+> [!TIP]
+> If you encounter a naming conflict with the standard `flow` formula, you can use the fully qualified name: `brew install --cask vigeng/flow/flow`.
 
 ### Manual
 
