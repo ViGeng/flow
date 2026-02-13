@@ -50,7 +50,12 @@ brew install --cask flow
 ```
 
 > [!TIP]
-> If you encounter a naming conflict with the standard `flow` formula, you can use the fully qualified name: `brew install --cask vigeng/tap/flow`.
+> If you encounter a naming conflict with the standard `flow` formula or `flow-desktop` cask, use the fully qualified name:
+>
+> ```bash
+> brew install --cask vigeng/tap/flow
+> brew upgrade vigeng/tap/flow
+> ```
 
 ### Manual
 
