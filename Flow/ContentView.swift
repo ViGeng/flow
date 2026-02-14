@@ -414,7 +414,7 @@ struct RecursiveNodeView: View {
             }
             
             if hasChildren && isExpanded {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 6) {
                     ForEach(node.children) { child in
                         RecursiveNodeView(
                             node: child,

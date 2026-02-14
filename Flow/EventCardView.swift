@@ -252,12 +252,12 @@ struct EventRowView: View {
                 .transition(.opacity)
             }
         }
-        .padding(.vertical, isRootLevel ? 8 : 4)
-        .padding(.horizontal, isRootLevel ? 12 : 6)
-        .background(background, in: RoundedRectangle(cornerRadius: isRootLevel ? 10 : 6))
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(background, in: RoundedRectangle(cornerRadius: 10))
         .overlay(
-            RoundedRectangle(cornerRadius: isRootLevel ? 10 : 6)
-                .strokeBorder(borderColor, lineWidth: isRootLevel ? 1 : (isSelected ? 1.5 : 0))
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(borderColor, lineWidth: isSelected ? 1.5 : 1)
         )
         .opacity(node.state == .blocked ? 0.5 : 1.0)
         .contentShape(Rectangle())
@@ -588,30 +588,18 @@ struct EventRowView: View {
     }
     
     private var background: some ShapeStyle {
-        if isRootLevel {
-            if node.state == .waiting {
-                return AnyShapeStyle(Color.orange.opacity(0.06))
-            }
-            return AnyShapeStyle(Color(.controlBackgroundColor))
-        } else {
-            if node.state == .waiting {
-                return AnyShapeStyle(Color.orange.opacity(0.08))
-            } else if isSelected {
-                return AnyShapeStyle(Color.accentColor.opacity(0.06))
-            }
-            return AnyShapeStyle(.clear)
+        if node.state == .waiting {
+            return AnyShapeStyle(Color.orange.opacity(0.06))
+        } else if isSelected {
+            return AnyShapeStyle(Color.accentColor.opacity(0.04))
         }
+        return AnyShapeStyle(Color(.controlBackgroundColor))
     }
     
     private var borderColor: Color {
-        if isRootLevel {
-            if isSelected { return .accentColor.opacity(0.5) }
-            if node.state == .waiting { return .orange.opacity(0.3) }
-            return .secondary.opacity(0.15)
-        } else {
-            if isSelected { return .accentColor.opacity(0.5) }
-            return .clear
-        }
+        if isSelected { return .accentColor.opacity(0.6) }
+        if node.state == .waiting { return .orange.opacity(0.3) }
+        return .secondary.opacity(0.1)
     }
 }
 
