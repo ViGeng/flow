@@ -268,7 +268,7 @@ struct ContentView: View {
     
     private var sectionTabBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 6) {
+            HStack(spacing: 2) {
                 ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { index, section in
                     sectionTab(for: section, index: index)
                 }
@@ -280,17 +280,23 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 10, weight: .bold))
-                        .padding(6)
+                        .frame(width: 24, height: 24)
                         .background(Color.secondary.opacity(0.1), in: Circle())
                         .foregroundColor(.secondary)
                 }
                 .buttonStyle(.plain)
-                .padding(.leading, 4)
+                .padding(.leading, 8)
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 6)
+            .padding(.vertical, 8)
         }
-        .background(.background)
+        .background(Color.gray.opacity(0.05))
+        .overlay(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.secondary.opacity(0.1)),
+            alignment: .bottom
+        )
     }
     
     private func sectionTab(for section: Section, index: Int) -> some View {
@@ -302,12 +308,21 @@ struct ContentView: View {
                 viewModel.selectedSectionIndex = index
             }
         } label: {
-            Text(label)
-                .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(isSelected ? Color.accentColor.opacity(0.12) : Color.clear, in: Capsule())
-                .foregroundColor(isSelected ? .accentColor : .secondary)
+            VStack(spacing: 4) {
+                Text(label)
+                    .font(.system(size: 13, weight: isSelected ? .semibold : .regular))
+                    .foregroundColor(isSelected ? .primary : .secondary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                
+                // Active indicator (underline style)
+                Rectangle()
+                    .fill(isSelected ? Color.accentColor : Color.clear)
+                    .frame(height: 2)
+                    .cornerRadius(1)
+                    .padding(.horizontal, 8)
+            }
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .contextMenu {
