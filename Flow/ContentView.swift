@@ -269,8 +269,8 @@ struct ContentView: View {
     private var sectionTabBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 6) {
-                ForEach(viewModel.sections.indices, id: \.self) { index in
-                    sectionTab(for: index)
+                ForEach(Array(viewModel.sections.enumerated()), id: \.element.id) { index, section in
+                    sectionTab(for: section, index: index)
                 }
                 
                 // Add Section Button
@@ -293,8 +293,7 @@ struct ContentView: View {
         .background(.background)
     }
     
-    private func sectionTab(for index: Int) -> some View {
-        let section = viewModel.sections[index]
+    private func sectionTab(for section: Section, index: Int) -> some View {
         let isSelected = viewModel.selectedSectionIndex == index
         let label = section.name.isEmpty ? "General" : section.name
         
