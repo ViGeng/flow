@@ -99,86 +99,96 @@ struct EventRowView: View {
         HStack(spacing: 8) {
             leadingIndicator
             
-            // Title + metadata (or edit field)
-            if isEditing {
-                TextField("Event title", text: $editText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: isRootLevel ? 14 : 13))
-                    .onSubmit { commitEdit() }
-                    .onExitCommand { cancelEdit() }
-            } else {
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(spacing: 4) {
-                        // Event type icon
-                        if node.eventType == .milestone {
-                            Image(systemName: "flag.fill")
-                                .font(.system(size: 10))
-                                .foregroundColor(.purple)
-                        } else if node.eventType == .event {
-                            Image(systemName: "calendar")
-                                .font(.system(size: 10))
-                                .foregroundColor(.teal)
+            // Content Interaction Zone
+            // Wrap title and spacer to capture selection taps ONLY here
+            HStack(spacing: 0) {
+                // Title + metadata (or edit field)
+                if isEditing {
+                    TextField("Event title", text: $editText)
+                        .textFieldStyle(.plain)
+                        .font(.system(size: isRootLevel ? 14 : 13))
+                        .onSubmit { commitEdit() }
+                        .onExitCommand { cancelEdit() }
+                } else {
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 4) {
+                            // Event type icon
+                            if node.eventType == .milestone {
+                                Image(systemName: "flag.fill")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.purple)
+                            } else if node.eventType == .event {
+                                Image(systemName: "calendar")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.teal)
+                            }
+                            
+                            if node.referenceID != nil {
+                                Image(systemName: "link")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.secondary)
+                            }
+                            Text(.init(node.title))
+                                .font(.system(size: isRootLevel ? 14 : 13, weight: isRootLevel ? .semibold : (node.state == .active ? .medium : .regular)))
+                                .foregroundColor(foregroundColor)
+                                .strikethrough(node.state == .completed)
+                                .lineLimit(2)
                         }
                         
-                        if node.referenceID != nil {
-                            Image(systemName: "link")
-                                .font(.system(size: 10))
-                                .foregroundColor(.secondary)
-                        }
-                        Text(.init(node.title))
-                            .font(.system(size: isRootLevel ? 14 : 13, weight: isRootLevel ? .semibold : (node.state == .active ? .medium : .regular)))
-                            .foregroundColor(foregroundColor)
-                            .strikethrough(node.state == .completed)
-                            .lineLimit(2)
-                    }
-                    
-                    // Subtitle info
-                    HStack(spacing: 6) {
-                        if let progress = node.childProgressText {
-                            Text(progress)
-                                .font(.system(size: 10, weight: .medium, design: .rounded))
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal, 5)
-                                .padding(.vertical, 1)
-                                .background(.quaternary, in: Capsule())
-                        }
-                        
-                        if let dueDate = node.dueDate {
-                            let isPast = dueDate < Date()
-                            Label(dueDate.formatted(date: .abbreviated, time: .omitted), systemImage: "calendar")
-                                .font(.system(size: 10))
-                                .foregroundColor(isPast ? .red : .secondary)
-                        }
-                        
-                        if !node.logs.isEmpty {
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.15)) {
-                                    showLogs.toggle()
-                                }
-                            } label: {
-                                Label("\(node.logs.count)", systemImage: "text.bubble")
-                                    .font(.system(size: 10, weight: .medium))
+                        // Subtitle info
+                        HStack(spacing: 6) {
+                            if let progress = node.childProgressText {
+                                Text(progress)
+                                    .font(.system(size: 10, weight: .medium, design: .rounded))
                                     .foregroundColor(.secondary)
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 1)
                                     .background(.quaternary, in: Capsule())
                             }
-                            .buttonStyle(.plain)
-                        }
-                        
-                        ForEach(displayTags, id: \.self) { tag in
-                            Text("#\(tag)")
-                                .font(.system(size: 10, weight: .medium))
-                                .foregroundColor(.blue)
-                                .padding(.horizontal, 4)
-                                .padding(.vertical, 1)
-                                .background(Color.blue.opacity(0.1), in: Capsule())
+                            
+                            if let dueDate = node.dueDate {
+                                let isPast = dueDate < Date()
+                                Label(dueDate.formatted(date: .abbreviated, time: .omitted), systemImage: "calendar")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(isPast ? .red : .secondary)
+                            }
+                            
+                            if !node.logs.isEmpty {
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.15)) {
+                                        showLogs.toggle()
+                                    }
+                                } label: {
+                                    Label("\(node.logs.count)", systemImage: "text.bubble")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundColor(.secondary)
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(.quaternary, in: Capsule())
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            
+                            ForEach(displayTags, id: \.self) { tag in
+                                Text("#\(tag)")
+                                    .font(.system(size: 10, weight: .medium))
+                                    .foregroundColor(.blue)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 1)
+                                    .background(Color.blue.opacity(0.1), in: Capsule())
+                            }
                         }
                     }
                 }
+                
+                Spacer()
             }
-            
-            Spacer()
+            .contentShape(Rectangle())
+            .onTapGesture(count: 2) { startEditing() }
+            .simultaneousGesture(TapGesture().onEnded {
+                SoundManager.shared.playClick()
+                onSelect()
+            })
             
             // Inline action buttons (hover or selected)
             if (isHovering || isSelected) && !isEditing {
@@ -196,6 +206,7 @@ struct EventRowView: View {
                     
                     // Tag button
                     Button {
+                        SoundManager.shared.playClick()
                         showingTagPopover.toggle()
                     } label: {
                         Image(systemName: "tag")
@@ -210,6 +221,7 @@ struct EventRowView: View {
                     
                     // Wait toggle
                     Button {
+                        SoundManager.shared.playClick()
                         showingWaitPopover.toggle()
                     } label: {
                         Image(systemName: node.isWaiting ? "clock.fill" : "clock")
@@ -223,7 +235,10 @@ struct EventRowView: View {
                     }
                     
                     // Indent
-                    Button(action: onIndent) {
+                    Button(action: {
+                        SoundManager.shared.playClick()
+                        onIndent()
+                    }) {
                         Image(systemName: "arrow.right")
                             .font(.system(size: 10))
                             .foregroundColor(.secondary.opacity(0.6))
@@ -232,7 +247,10 @@ struct EventRowView: View {
                     .help("Indent")
                     
                     // Outdent
-                    Button(action: onOutdent) {
+                    Button(action: {
+                        SoundManager.shared.playClick()
+                        onOutdent()
+                    }) {
                         Image(systemName: "arrow.left")
                             .font(.system(size: 10))
                             .foregroundColor(.secondary.opacity(0.6))
@@ -241,7 +259,10 @@ struct EventRowView: View {
                     .help("Outdent")
                     
                     // Delete
-                    Button(action: onDelete) {
+                    Button(action: {
+                        SoundManager.shared.playDelete()
+                        onDelete()
+                    }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 9, weight: .medium))
                             .foregroundColor(.secondary.opacity(0.4))
@@ -266,8 +287,6 @@ struct EventRowView: View {
                 isHovering = hovering
             }
         }
-        .onTapGesture(count: 2) { startEditing() }
-        .onTapGesture(count: 1) { onSelect() }
         
         // Log entries section
         if showLogs || isSelected {
@@ -540,7 +559,10 @@ struct EventRowView: View {
             // Interactive buttons for normal nodes
             switch node.state {
             case .active:
-                Button(action: onToggle) {
+                Button(action: {
+                    SoundManager.shared.playSuccess()
+                    onToggle()
+                }) {
                     Image(systemName: "circle")
                         .font(.system(size: isRootLevel ? 18 : 16))
                         .foregroundColor(.accentColor)
@@ -549,7 +571,10 @@ struct EventRowView: View {
                 .help("Complete")
                 
             case .waiting:
-                Button(action: onToggle) {
+                Button(action: {
+                    SoundManager.shared.playClick()
+                    onToggle()
+                }) {
                     Image(systemName: "clock.fill")
                         .font(.system(size: isRootLevel ? 18 : 16))
                         .foregroundColor(.orange)
@@ -565,7 +590,10 @@ struct EventRowView: View {
                     .frame(width: 20)
                 
             case .completed:
-                Button(action: onToggle) {
+                Button(action: {
+                    SoundManager.shared.playClick()
+                    onToggle()
+                }) {
                     Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: isRootLevel ? 18 : 16))
                     .foregroundColor(.green.opacity(0.5))
@@ -591,13 +619,15 @@ struct EventRowView: View {
         if node.state == .waiting {
             return AnyShapeStyle(Color.orange.opacity(0.06))
         } else if isSelected {
-            return AnyShapeStyle(Color.accentColor.opacity(0.04))
+            // "Highlighted color" style: Standard Apple tint (approx 10-15%)
+            return AnyShapeStyle(Color.accentColor.opacity(0.12))
         }
         return AnyShapeStyle(Color(.controlBackgroundColor))
     }
     
     private var borderColor: Color {
-        if isSelected { return .accentColor.opacity(0.6) }
+        // Remove "bunny books" (bounding box) for selection
+        if isSelected { return .clear }
         if node.state == .waiting { return .orange.opacity(0.3) }
         return .secondary.opacity(0.1)
     }
@@ -620,7 +650,7 @@ struct LogEntryView: View {
             Text(LogEntry.timestampFormatter.string(from: log.timestamp))
                 .font(.system(size: 9, weight: .medium, design: .monospaced))
                 .foregroundColor(.secondary.opacity(0.6))
-                .frame(minWidth: 90, alignment: .leading)
+                .frame(minWidth: 70, alignment: .leading)
                 .padding(.top, 1)
             
             if isEditing {

@@ -65,7 +65,7 @@ struct LogEntry: Identifiable, Codable, Equatable {
     
     static let timestampFormatter: DateFormatter = {
         let fmt = DateFormatter()
-        fmt.dateFormat = "yyyy-MM-dd HH:mm"
+        fmt.dateFormat = "MM-dd HH:mm"
         fmt.locale = Locale(identifier: "en_US_POSIX")
         return fmt
     }()

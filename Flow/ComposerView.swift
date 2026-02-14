@@ -11,6 +11,7 @@ import SwiftUI
 /// The bottom input bar for creating new events and adding task references.
 struct ComposerView: View {
     @Bindable var viewModel: FlowViewModel
+    @FocusState.Binding var isFocused: Bool
     
     @State private var eventTitle: String = ""
     @State private var showSearchResults = false
@@ -92,6 +93,7 @@ struct ComposerView: View {
                 )
                 .textFieldStyle(.plain)
                 .font(.system(size: 13))
+                .focused($isFocused)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 12)
                 .background(.background.secondary, in: RoundedRectangle(cornerRadius: 8))
@@ -126,6 +128,7 @@ struct ComposerView: View {
     // MARK: - Actions
     
     private func addEvent() {
+        SoundManager.shared.playEnter()
         viewModel.addNode(title: eventTitle)
         eventTitle = ""
         showSearchResults = false
@@ -153,6 +156,7 @@ struct ComposerView: View {
     /// Add a reference to an existing event as a blocking child.
     private func addReference(_ referencedNode: EventNode) {
         guard let parentID = viewModel.selectedNodeID else { return }
+        SoundManager.shared.playEnter()
         viewModel.addTaskReference(to: parentID, targetNodeID: referencedNode.id)
         eventTitle = ""
         showSearchResults = false

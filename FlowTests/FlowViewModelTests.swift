@@ -55,4 +55,20 @@ struct FlowViewModelTests {
         
         #expect(waitingCount == 1)
     }
+    
+    @Test func testFilePathsRespectDebugFlag() {
+        let viewModel = FlowViewModel()
+        let fileName = viewModel.fileURL.lastPathComponent
+        
+        #if DEBUG
+        #expect(fileName == "flow_debug.md")
+        // Check directory suffix (might be absolute path, so checking suffix is safer)
+        // fileURL is .../Flow_Debug/flow_debug.md
+        // storageDirectory is .../Flow_Debug
+        #expect(viewModel.storageDirectory.hasSuffix("Flow_Debug"))
+        #else
+        #expect(fileName == "flow.md")
+        #expect(viewModel.storageDirectory.hasSuffix("Flow"))
+        #endif
+    }
 }

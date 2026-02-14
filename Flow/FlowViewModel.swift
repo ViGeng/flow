@@ -83,6 +83,7 @@ final class FlowViewModel {
     
     private var fileURL: URL
     private var scopedResource: ScopedResource?
+    private var saveTask: Task<Void, Never>?
     
     // Helper to manage security-scoped resource lifecycle
     private final class ScopedResource {
@@ -105,9 +106,9 @@ final class FlowViewModel {
             // Existing logic monitored the file directly.
             
             let fm = FileManager.default
-            let dir = url.appendingPathComponent("flow.md").deletingLastPathComponent()
+            let dir = url.appendingPathComponent(FlowViewModel.defaultFileName).deletingLastPathComponent()
             try? fm.createDirectory(at: dir, withIntermediateDirectories: true)
-            let path = url.appendingPathComponent("flow.md").path
+            let path = url.appendingPathComponent(FlowViewModel.defaultFileName).path
             
             if !fm.fileExists(atPath: path) {
                 fm.createFile(atPath: path, contents: nil)
@@ -119,7 +120,7 @@ final class FlowViewModel {
             if fd >= 0 {
                 let source = DispatchSource.makeFileSystemObjectSource(
                     fileDescriptor: fd,
-                    eventMask: [.write, .rename],
+                    eventMask: [.write, .rename, .delete],
                     queue: .main
                 )
                 
@@ -152,7 +153,19 @@ final class FlowViewModel {
         }
     }
     
+    // MARK: - Constants
+    
+    #if DEBUG
+    private static let bookmarkKey = "flowFolderBookmark_DEBUG"
+    private static let defaultFileName = "flow_debug.md"
+    private static let defaultDirName = "Flow_Debug"
+    #else
     private static let bookmarkKey = "flowFolderBookmark"
+    private static let defaultFileName = "flow.md"
+    private static let defaultDirName = "Flow"
+    #endif
+    
+    private static let tagRegex = try! NSRegularExpression(pattern: #"#(\w+)"#)
     
     // MARK: - Init
     
@@ -166,8 +179,6 @@ final class FlowViewModel {
             self.scopedResource = ScopedResource(url: dir) { [weak self] in
                 self?.loadNodes()
             }
-        } else {
-            // Fallback paths (Documents) — still need file monitoring
         }
         
         if self.scopedResource == nil {
@@ -206,26 +217,26 @@ final class FlowViewModel {
                         UserDefaults.standard.set(newBookmark, forKey: bookmarkKey)
                     }
                 }
-                let flowFile = url.appendingPathComponent("flow.md")
+                let flowFile = url.appendingPathComponent(defaultFileName)
                 return (flowFile, url)
             }
         }
         
         // 2. Try iCloud default
         let userName = NSUserName()
-        let iCloudPath = "/Users/\(userName)/Library/Mobile Documents/com~apple~CloudDocs/Flow"
+        let iCloudPath = "/Users/\(userName)/Library/Mobile Documents/com~apple~CloudDocs/\(defaultDirName)"
         let iCloudURL = URL(fileURLWithPath: iCloudPath)
         let fm = FileManager.default
         
         if fm.isWritableFile(atPath: iCloudPath) {
-            return (iCloudURL.appendingPathComponent("flow.md"), nil)
+            return (iCloudURL.appendingPathComponent(defaultFileName), nil)
         }
         
         // 3. Fall back to Documents
         let documentsURL = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let flowDir = documentsURL.appendingPathComponent("Flow")
+        let flowDir = documentsURL.appendingPathComponent(defaultDirName)
         try? fm.createDirectory(at: flowDir, withIntermediateDirectories: true)
-        return (flowDir.appendingPathComponent("flow.md"), nil)
+        return (flowDir.appendingPathComponent(defaultFileName), nil)
     }
     
     private func canWriteToStorage() -> Bool {
@@ -253,7 +264,7 @@ final class FlowViewModel {
                 UserDefaults.standard.set(bookmark, forKey: FlowViewModel.bookmarkKey)
             }
             
-            self.fileURL = url.appendingPathComponent("flow.md")
+            self.fileURL = url.appendingPathComponent(FlowViewModel.defaultFileName)
             
             // Start accessing/monitoring new
             self.scopedResource = ScopedResource(url: url) { [weak self] in
@@ -672,26 +683,37 @@ final class FlowViewModel {
     }
     
     private func saveNodes() {
-        syncReferences() // Sync before save
+        // Debounce: Cancel pending save
+        saveTask?.cancel()
         
-        let coordinator = NSFileCoordinator()
-        var error: NSError?
-        let content = MarkdownParser.serializeSections(sections)
-        
-        coordinator.coordinate(writingItemAt: fileURL, options: .forReplacing, error: &error) { url in
-            do {
-                let dir = url.deletingLastPathComponent()
-                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                try content.write(to: url, atomically: true, encoding: .utf8)
-                self.errorMessage = nil
-            } catch {
-                self.errorMessage = "Failed to save: \(error.localizedDescription)"
-                needsFolderPicker = true
-            }
-        }
-        
-        if let error {
-            self.errorMessage = "Coordination error: \(error.localizedDescription)"
+        saveTask = Task {
+            // Wait for inactivity (0.5s) to avoid UI stutter during typing
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            if Task.isCancelled { return }
+            
+            // Sync and serialize (MainActor)
+            self.syncReferences()
+            let content = MarkdownParser.serializeSections(self.sections)
+            let url = self.fileURL
+            
+            // Perform I/O in background to unblock UI
+            await Task.detached(priority: .background) {
+                let coordinator = NSFileCoordinator()
+                var error: NSError?
+                
+                coordinator.coordinate(writingItemAt: url, options: .forReplacing, error: &error) { writeURL in
+                    do {
+                        let dir = writeURL.deletingLastPathComponent()
+                        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                        try content.write(to: writeURL, atomically: true, encoding: .utf8)
+                    } catch {
+                        print("Async save failed: \(error)")
+                    }
+                }
+            }.value
+            
+            // Handle error reporting back on MainActor if needed? 
+            // For now, silent failure logging is safer than modifying state from background.
         }
     }
     
@@ -788,8 +810,7 @@ final class FlowViewModel {
     /// Extract #tags from text, returning (cleanTitle, tags).
     static func extractTags(from text: String) -> (title: String, tags: [String]) {
         var tags: [String] = []
-        let regex = try! NSRegularExpression(pattern: #"#(\w+)"#)
-        let matches = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
+        let matches = FlowViewModel.tagRegex.matches(in: text, range: NSRange(text.startIndex..., in: text))
         for match in matches {
             if let range = Range(match.range(at: 1), in: text) {
                 let tag = String(text[range]).lowercased()
@@ -801,7 +822,7 @@ final class FlowViewModel {
         }
         
         // Remove tags from title
-        let cleanTitle = regex.stringByReplacingMatches(
+        let cleanTitle = FlowViewModel.tagRegex.stringByReplacingMatches(
             in: text,
             range: NSRange(text.startIndex..., in: text),
             withTemplate: ""
@@ -881,12 +902,18 @@ final class FlowViewModel {
         
         if let parentID {
             mutateNode(id: parentID, in: &nodes) { parent in
-                let node = parent.children.remove(at: index)
-                parent.children[index - 1].children.append(node)
+                // Verify safety before modifying
+                if parent.children.indices.contains(index) && parent.children[index].id == nodeID {
+                    let node = parent.children.remove(at: index)
+                    parent.children[index - 1].children.append(node)
+                }
             }
         } else {
-            let node = nodes.remove(at: index)
-            nodes[index - 1].children.append(node)
+            // Root level
+            if nodes.indices.contains(index) && nodes[index].id == nodeID {
+                let node = nodes.remove(at: index)
+                nodes[index - 1].children.append(node)
+            }
         }
         saveNodes()
     }

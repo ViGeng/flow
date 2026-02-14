@@ -16,6 +16,9 @@ struct ContentView: View {
     @State private var sectionNameInput = ""
     @State private var sectionToRenameIndex: Int?
     
+    // Focus & Shortcuts
+    @FocusState private var isComposerFocused: Bool
+    
     var body: some View {
         NavigationSplitView {
             sidebarView
@@ -260,7 +263,28 @@ struct ContentView: View {
                 }
             }
             
-            ComposerView(viewModel: viewModel)
+            ComposerView(viewModel: viewModel, isFocused: $isComposerFocused)
+                .background(
+                    VStack {
+                        // Keyboard Shortcuts via hidden buttons
+                        // Cmd+N: Focus "New Task"
+                        Button(action: { isComposerFocused = true }) {
+                            EmptyView()
+                        }
+                        .keyboardShortcut("n", modifiers: .command)
+                        
+                        // Cmd+T: New Section
+                        Button(action: {
+                            sectionNameInput = ""
+                            isAddingSection = true
+                        }) {
+                            EmptyView()
+                        }
+                        .keyboardShortcut("t", modifiers: .command)
+                    }
+                    .frame(width: 0, height: 0)
+                    .opacity(0)
+                )
         }
     }
     
