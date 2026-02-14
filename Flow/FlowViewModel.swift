@@ -28,7 +28,13 @@ final class FlowViewModel {
     var sections: [Section] = [Section()]
     
     /// Currently selected section tab index.
-    var selectedSectionIndex: Int = 0
+    var selectedSectionIndex: Int = 0 {
+        didSet {
+            // Clear selection when switching sections to prevent adding children
+            // to nodes in different sections.
+            selectedNodeID = nil
+        }
+    }
     
     /// Convenience: nodes of the active section.
     var nodes: [EventNode] {
@@ -750,6 +756,11 @@ final class FlowViewModel {
         let raw = title.trimmingCharacters(in: .whitespaces)
         guard !raw.isEmpty else { return }
         
+        // Clear filters to ensure the new node is visible
+        activeFilter = nil
+        searchQuery = ""
+        tagFilter = nil
+        
         // Extract tags from text
         var (cleanTitle, tags) = Self.extractTags(from: raw)
         
@@ -761,8 +772,12 @@ final class FlowViewModel {
         let newNode = EventNode(title: cleanTitle, tags: tags)
         
         if let parentID = selectedNodeID {
-            mutateNode(id: parentID, in: &nodes) { parent in
+            let found = mutateNode(id: parentID, in: &nodes) { parent in
                 parent.children.append(newNode)
+            }
+            if !found {
+                // Parent might be in a different section or vanished; fallback to root
+                nodes.append(newNode)
             }
         } else {
             nodes.append(newNode)
