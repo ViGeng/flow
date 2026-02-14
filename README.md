@@ -2,7 +2,7 @@
 
 A native macOS task manager built with SwiftUI. Tasks are stored as a **recursive tree** in a single Markdown file — compatible with iCloud, Obsidian, and any text editor.
 
-![Preview](/doc-assents/previwe-screenshot.png)
+![alt text](image.png)
 
 Key philosophy:
 - This app serves as a task/event flow friendly viewer/editor for markdown file. so this app is regarded as an flow-augmented markdown editor and viewer.
