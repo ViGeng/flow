@@ -48,6 +48,10 @@ final class FlowViewModel {
     /// Currently selected node ID.
     var selectedNodeID: UUID?
     
+    /// The ID of the root node that currently has exclusive focus (accordion mode).
+    /// When set, other root nodes will collapse.
+    var rootNodeExclusiveFocusID: UUID?
+    
     /// Active sidebar filter (nil = show all).
     var activeFilter: EventState?
     

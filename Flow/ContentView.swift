@@ -417,8 +417,12 @@ struct RecursiveNodeView: View {
                     onToggle: { viewModel.toggleNode(node.id) },
                     onDelete: { viewModel.deleteNode(node.id) },
                     onSelect: {
-                        withAnimation(.easeInOut(duration: 0.15)) {
-                            viewModel.selectedNodeID = viewModel.selectedNodeID == node.id ? nil : node.id
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                            let wasSelected = (viewModel.selectedNodeID == node.id)
+                            viewModel.selectedNodeID = wasSelected ? nil : node.id
+                            if !wasSelected && depth == 0 {
+                                viewModel.rootNodeExclusiveFocusID = node.id
+                            }
                         }
                     },
                     onToggleWait: { viewModel.toggleWait(node.id) },
@@ -437,7 +441,7 @@ struct RecursiveNodeView: View {
                 
                 if hasChildren {
                     Button {
-                        withAnimation(.easeInOut(duration: 0.2)) {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
                             isExpanded.toggle()
                         }
                     } label: {
@@ -463,6 +467,14 @@ struct RecursiveNodeView: View {
                     }
                 }
                 .padding(.leading, 24)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+        .onChange(of: viewModel.rootNodeExclusiveFocusID) { _, newID in
+            if depth == 0, let id = newID {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                    isExpanded = (id == node.id)
+               }
             }
         }
     }

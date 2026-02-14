@@ -2,7 +2,7 @@
 
 A native macOS task manager built with SwiftUI. Tasks are stored as a **recursive tree** in a single Markdown file — compatible with iCloud, Obsidian, and any text editor.
 
-![alt text](image.png)
+![alt text](./doc-assets/image-1.png)
 
 Key philosophy:
 - This app serves as a task/event flow friendly viewer/editor for markdown file. so this app is regarded as an flow-augmented markdown editor and viewer.
@@ -37,6 +37,7 @@ Traditional todo apps hide your data in proprietary formats. Flow stores everyth
 - **Inline editing** — double-click any task
 - **Search & filter** by state, tags, or text
 - **Reference system** — link tasks across branches
+- **Accordion mode** — focus on one root task at a time
 
 ## Install
 
