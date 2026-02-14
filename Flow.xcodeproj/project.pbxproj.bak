@@ -23,13 +23,7 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXBuildFile section */
-		FACADE02FACADE02FACADE02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FACADE01FACADE01FACADE01 /* Assets.xcassets */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		FACADE01FACADE01FACADE01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Flow/Assets.xcassets; sourceTree = "<group>"; };
-
 		B6D3692A2F3F3C400090CDB7 /* Flow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D3693C2F3F3C410090CDB7 /* FlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D369462F3F3C410090CDB7 /* FlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +75,6 @@
 		B6D369212F3F3C400090CDB7 = {
 			isa = PBXGroup;
 			children = (
-				FACADE01FACADE01FACADE01 /* Assets.xcassets */,
 				B6D3692C2F3F3C400090CDB7 /* Flow */,
 				B6D3693F2F3F3C410090CDB7 /* FlowTests */,
 				B6D369492F3F3C410090CDB7 /* FlowUITests */,
@@ -219,7 +212,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FACADE02FACADE02FACADE02 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
