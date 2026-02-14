@@ -273,6 +273,7 @@ struct EventRowView: View {
                 .transition(.opacity)
             }
         }
+        .opacity(node.state == .blocked ? 0.5 : 1.0)
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
         .background(background, in: RoundedRectangle(cornerRadius: 10))
@@ -280,7 +281,6 @@ struct EventRowView: View {
             RoundedRectangle(cornerRadius: 10)
                 .strokeBorder(borderColor, lineWidth: isSelected ? 1.5 : 1)
         )
-        .opacity(node.state == .blocked ? 0.5 : 1.0)
         .contentShape(Rectangle())
         .onHover { hovering in
             withAnimation(.easeInOut(duration: 0.15)) {
@@ -620,14 +620,14 @@ struct EventRowView: View {
             return AnyShapeStyle(Color.orange.opacity(0.06))
         } else if isSelected {
             // "Highlighted color" style: Standard Apple tint (approx 10-15%)
-            return AnyShapeStyle(Color.accentColor.opacity(0.12))
+            return AnyShapeStyle(Color.accentColor.opacity(0.25))
         }
         return AnyShapeStyle(Color(.controlBackgroundColor))
     }
     
     private var borderColor: Color {
         // Remove "bunny books" (bounding box) for selection
-        if isSelected { return .clear }
+        if isSelected { return .accentColor.opacity(0.5) }
         if node.state == .waiting { return .orange.opacity(0.3) }
         return .secondary.opacity(0.1)
     }

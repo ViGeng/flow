@@ -8,10 +8,6 @@ Key philosophy:
 - This app serves as a task/event flow friendly viewer/editor for markdown file. so this app is regarded as an flow-augmented markdown editor and viewer.
 - It also serves as a work log that streamlines what is happening along side the task/event flow.
 
-## TODOs
-
-- [ ] Ref event data model redesign.
-
 ## Why Flow?
 
 Traditional todo apps hide your data in proprietary formats. Flow stores everything in plain Markdown:
@@ -89,4 +85,7 @@ Data file: `flow.md` (stored in user-chosen directory, iCloud, or `~/Documents/F
 
 ## License
 
-MIT
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/) License.
+
+- **Personal Use**: Free
+- **Commercial/Business Use**: Prohibited
