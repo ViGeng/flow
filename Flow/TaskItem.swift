@@ -8,6 +8,69 @@
 
 import Foundation
 
+/// The type of event node.
+enum EventType: String, Codable, CaseIterable {
+    case task       // Default: a regular task
+    case milestone  // A milestone marker (🏁)
+    case event      // A calendar/scheduled event (📅)
+    
+    var emoji: String {
+        switch self {
+        case .task: return ""
+        case .milestone: return "🏁"
+        case .event: return "📅"
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .task: return "checklist"
+        case .milestone: return "flag.fill"
+        case .event: return "calendar"
+        }
+    }
+    
+    var displayName: String {
+        switch self {
+        case .task: return "Task"
+        case .milestone: return "Milestone"
+        case .event: return "Event"
+        }
+    }
+    
+    /// Parse emoji suffix from title, returning (cleanTitle, type).
+    static func parse(from title: String) -> (String, EventType) {
+        let trimmed = title.trimmingCharacters(in: .whitespaces)
+        if trimmed.hasSuffix("🏁") {
+            return (String(trimmed.dropLast()).trimmingCharacters(in: .whitespaces), .milestone)
+        }
+        if trimmed.hasSuffix("📅") {
+            return (String(trimmed.dropLast()).trimmingCharacters(in: .whitespaces), .event)
+        }
+        return (trimmed, .task)
+    }
+}
+
+/// A timestamped work log entry attached to an EventNode.
+struct LogEntry: Identifiable, Codable, Equatable {
+    var id: UUID
+    var timestamp: Date
+    var content: String  // Markdown text
+    
+    init(id: UUID = UUID(), timestamp: Date = Date(), content: String) {
+        self.id = id
+        self.timestamp = timestamp
+        self.content = content
+    }
+    
+    static let timestampFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        return fmt
+    }()
+}
+
 /// The possible states an event node can be in.
 enum EventState: String, CaseIterable {
     case active     // Ready to be worked on
@@ -42,6 +105,8 @@ struct EventNode: Identifiable, Codable, Equatable {
     var tags: [String]              // e.g., ["wait", "urgent"]
     var metadata: [String: String]  // e.g., ["due": "2026-03-15"]
     var children: [EventNode]       // Recursive children
+    var logs: [LogEntry]            // Timestamped work log entries
+    var eventType: EventType        // task, milestone, or event
     var anchorID: String?           // e.g., "task-123" (HTML anchor on this node)
     var referenceID: String?        // e.g., "task-123" (This node links to that anchor)
     
@@ -52,6 +117,8 @@ struct EventNode: Identifiable, Codable, Equatable {
         tags: [String] = [],
         metadata: [String: String] = [:],
         children: [EventNode] = [],
+        logs: [LogEntry] = [],
+        eventType: EventType = .task,
         anchorID: String? = nil,
         referenceID: String? = nil
     ) {
@@ -61,6 +128,8 @@ struct EventNode: Identifiable, Codable, Equatable {
         self.tags = tags
         self.metadata = metadata
         self.children = children
+        self.logs = logs
+        self.eventType = eventType
         self.anchorID = anchorID
         self.referenceID = referenceID
     }

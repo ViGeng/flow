@@ -390,7 +390,11 @@ struct RecursiveNodeView: View {
                     onAddTag: { tag in viewModel.addTag(tag, to: node.id) },
                     onRemoveTag: { tag in viewModel.removeTag(tag, from: node.id) },
                     onRename: { newTitle in viewModel.renameNode(node.id, newTitle: newTitle) },
-                    onJumpToTarget: { viewModel.jumpToTarget(from: node.id) }
+                    onJumpToTarget: { viewModel.jumpToTarget(from: node.id) },
+                    onAddLog: { content in viewModel.addLog(to: node.id, content: content) },
+                    onEditLog: { logID, content in viewModel.editLog(nodeID: node.id, logID: logID, content: content) },
+                    onDeleteLog: { logID in viewModel.deleteLog(nodeID: node.id, logID: logID) },
+                    onSetEventType: { type in viewModel.setEventType(node.id, type: type) }
                 )
                 
                 if hasChildren {

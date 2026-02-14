@@ -25,6 +25,10 @@ struct EventRowView: View {
     let onRemoveTag: (String) -> Void
     let onRename: (String) -> Void
     let onJumpToTarget: () -> Void
+    let onAddLog: (String) -> Void
+    let onEditLog: (UUID, String) -> Void
+    let onDeleteLog: (UUID) -> Void
+    let onSetEventType: (EventType) -> Void
     
     @State private var isHovering = false
     @State private var isEditing = false
@@ -34,6 +38,11 @@ struct EventRowView: View {
     @State private var newTagText = ""
     @State private var hasDueDate: Bool
     @State private var waitDueDate: Date
+    @State private var showLogs = false
+    @State private var showLogInput = false
+    @State private var logInputText = ""
+    @State private var editingLogID: UUID?
+    @State private var editingLogText = ""
     
     init(
         node: EventNode,
@@ -50,7 +59,11 @@ struct EventRowView: View {
         onAddTag: @escaping (String) -> Void,
         onRemoveTag: @escaping (String) -> Void,
         onRename: @escaping (String) -> Void,
-        onJumpToTarget: @escaping () -> Void
+        onJumpToTarget: @escaping () -> Void,
+        onAddLog: @escaping (String) -> Void,
+        onEditLog: @escaping (UUID, String) -> Void,
+        onDeleteLog: @escaping (UUID) -> Void,
+        onSetEventType: @escaping (EventType) -> Void
     ) {
         self.node = node
         self.depth = depth
@@ -67,6 +80,10 @@ struct EventRowView: View {
         self.onRemoveTag = onRemoveTag
         self.onRename = onRename
         self.onJumpToTarget = onJumpToTarget
+        self.onAddLog = onAddLog
+        self.onEditLog = onEditLog
+        self.onDeleteLog = onDeleteLog
+        self.onSetEventType = onSetEventType
         self._hasDueDate = State(initialValue: node.dueDate != nil)
         self._waitDueDate = State(initialValue: node.dueDate ?? Date().addingTimeInterval(3 * 86400))
     }
@@ -92,12 +109,23 @@ struct EventRowView: View {
             } else {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
+                        // Event type icon
+                        if node.eventType == .milestone {
+                            Image(systemName: "flag.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.purple)
+                        } else if node.eventType == .event {
+                            Image(systemName: "calendar")
+                                .font(.system(size: 10))
+                                .foregroundColor(.teal)
+                        }
+                        
                         if node.referenceID != nil {
                             Image(systemName: "link")
                                 .font(.system(size: 10))
                                 .foregroundColor(.secondary)
                         }
-                        Text(node.title)
+                        Text(.init(node.title))
                             .font(.system(size: isRootLevel ? 14 : 13, weight: isRootLevel ? .semibold : (node.state == .active ? .medium : .regular)))
                             .foregroundColor(foregroundColor)
                             .strikethrough(node.state == .completed)
@@ -120,6 +148,22 @@ struct EventRowView: View {
                             Label(dueDate.formatted(date: .abbreviated, time: .omitted), systemImage: "calendar")
                                 .font(.system(size: 10))
                                 .foregroundColor(isPast ? .red : .secondary)
+                        }
+                        
+                        if !node.logs.isEmpty {
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.15)) {
+                                    showLogs.toggle()
+                                }
+                            } label: {
+                                Label("\(node.logs.count)", systemImage: "text.bubble")
+                                    .font(.system(size: 10, weight: .medium))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 1)
+                                    .background(.quaternary, in: Capsule())
+                            }
+                            .buttonStyle(.plain)
                         }
                         
                         ForEach(displayTags, id: \.self) { tag in
@@ -224,6 +268,11 @@ struct EventRowView: View {
         }
         .onTapGesture(count: 2) { startEditing() }
         .onTapGesture(count: 1) { onSelect() }
+        
+        // Log entries section
+        if showLogs || isSelected {
+            logSection
+        }
     }
     
     // MARK: - Inline Editing
@@ -249,6 +298,85 @@ struct EventRowView: View {
     private func cancelEdit() {
         isEditing = false
     }
+    
+    // MARK: - Log Section
+    
+    @ViewBuilder
+    private var logSection: some View {
+        if !node.logs.isEmpty || isSelected {
+            VStack(alignment: .leading, spacing: 4) {
+                // Existing logs
+                ForEach(node.logs) { log in
+                    LogEntryView(
+                        log: log,
+                        isEditing: editingLogID == log.id,
+                        editingText: $editingLogText,
+                        onEditStart: {
+                            editingLogText = log.content
+                            editingLogID = log.id
+                        },
+                        onEditCommit: {
+                            onEditLog(log.id, editingLogText)
+                            editingLogID = nil
+                        },
+                        onEditCancel: { editingLogID = nil },
+                        onDelete: { onDeleteLog(log.id) }
+                    )
+                }
+                
+                // Add log input
+                if isSelected {
+                    if showLogInput {
+                        HStack(spacing: 6) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.secondary)
+                            
+                            TextField("Add work log…", text: $logInputText)
+                                .textFieldStyle(.plain)
+                                .font(.system(size: 11))
+                                .onSubmit {
+                                    if !logInputText.isEmpty {
+                                        onAddLog(logInputText)
+                                        logInputText = ""
+                                        showLogInput = false
+                                    }
+                                }
+                                .onExitCommand {
+                                    showLogInput = false
+                                    logInputText = ""
+                                }
+                        }
+                        .padding(.top, 4)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                    } else {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                showLogInput = true
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 9, weight: .bold))
+                                Text("Add Log")
+                                    .font(.system(size: 10, weight: .medium))
+                            }
+                            .foregroundColor(.secondary.opacity(0.7))
+                            .padding(.vertical, 2)
+                            .padding(.horizontal, 6)
+                            .background(Color.secondary.opacity(0.1), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.top, 2)
+                    }
+                }
+            }
+            .padding(.leading, isRootLevel ? 36 : 28)
+            .padding(.trailing, 8)
+            .padding(.bottom, 4)
+        }
+    }
+
     
     // MARK: - Tag Popover
     
@@ -486,6 +614,73 @@ struct EventRowView: View {
         }
     }
 }
+
+/// A separate view for a single log entry to handle hover state independently
+struct LogEntryView: View {
+    let log: LogEntry
+    let isEditing: Bool
+    @Binding var editingText: String
+    let onEditStart: () -> Void
+    let onEditCommit: () -> Void
+    let onEditCancel: () -> Void
+    let onDelete: () -> Void
+    
+    @State private var isHovering = false
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 6) {
+            Text(LogEntry.timestampFormatter.string(from: log.timestamp))
+                .font(.system(size: 9, weight: .medium, design: .monospaced))
+                .foregroundColor(.secondary.opacity(0.6))
+                .frame(minWidth: 90, alignment: .leading)
+                .padding(.top, 1)
+            
+            if isEditing {
+                TextField("Edit log…", text: $editingText)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 11))
+                    .onSubmit(onEditCommit)
+                    .onExitCommand(perform: onEditCancel)
+            } else {
+                // Use LocalizedStringKey to enable Markdown parsing
+                Text(.init(log.content))
+                    .font(.system(size: 11))
+                    .foregroundColor(.primary.opacity(0.85))
+                    .fixedSize(horizontal: false, vertical: true) // Allow text wrapping
+                    .lineLimit(nil)
+            }
+            
+            Spacer()
+            
+            if isHovering && !isEditing {
+                HStack(spacing: 6) {
+                    Button(action: onEditStart) {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 9))
+                            .foregroundColor(.secondary.opacity(0.6))
+                    }
+                    .buttonStyle(.plain)
+                    .help("Edit log")
+                    
+                    Button(action: onDelete) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 9))
+                            .foregroundColor(.secondary.opacity(0.4))
+                    }
+                    .buttonStyle(.plain)
+                    .help("Delete log")
+                }
+            }
+        }
+        .padding(.vertical, 2)
+        .padding(.horizontal, 4)
+        .background(isHovering ? Color.secondary.opacity(0.05) : Color.clear, in: RoundedRectangle(cornerRadius: 4))
+        .onHover { hovering in
+            isHovering = hovering
+        }
+    }
+}
+
 
 // MARK: - Flow Layout (for tag chips)
 

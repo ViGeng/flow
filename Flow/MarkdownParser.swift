@@ -29,38 +29,59 @@ struct MarkdownParser {
     // MARK: - Parsing
     
     /// A parsed line with its indent level (used internally).
-    private struct ParsedLine {
-        let level: Int
-        let node: EventNode
+    private enum ParsedItem {
+        case node(level: Int, node: EventNode)
+        case log(level: Int, entry: LogEntry)
     }
     
     /// Parse a Markdown string into an array of top-level EventNodes.
+    /// Regex to match log lines: `> YYYY-MM-DD HH:MM content`
+    private static let logRegex = try! NSRegularExpression(pattern: #"^>\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})\s*(.*)$"#)
+    
     static func parse(_ text: String) -> [EventNode] {
         let lines = text.components(separatedBy: .newlines)
-        var parsedLines: [ParsedLine] = []
+        var parsedItems: [ParsedItem] = []
         
         for line in lines {
             let raw = line.replacingOccurrences(of: "\t", with: "    ") // normalize tabs
             let trimmed = raw.trimmingCharacters(in: .whitespaces)
             
-            guard trimmed.hasPrefix("- [") else { continue }
-            
             // Calculate indent level (number of leading spaces / 4)
             let leadingSpaces = raw.prefix(while: { $0 == " " }).count
             let level = leadingSpaces / indentUnit
             
-            guard let node = parseLine(trimmed) else { continue }
-            parsedLines.append(ParsedLine(level: level, node: node))
+            if trimmed.hasPrefix("- [") {
+                guard let node = parseLine(trimmed) else { continue }
+                parsedItems.append(.node(level: level, node: node))
+            } else if trimmed.hasPrefix(">") {
+                if let entry = parseLogLine(trimmed) {
+                    parsedItems.append(.log(level: level, entry: entry))
+                }
+            }
         }
         
         // Build tree recursively from flat list
-        return buildTree(from: parsedLines, startIndex: 0, parentLevel: -1).nodes
+        return buildTree(from: parsedItems, startIndex: 0, parentLevel: -1).nodes
     }
     
-    /// Recursively build a tree from a flat list of parsed lines.
+    /// Parse a log line like `> 2026-02-14 15:30 Some content here`
+    private static func parseLogLine(_ trimmed: String) -> LogEntry? {
+        let range = NSRange(trimmed.startIndex..., in: trimmed)
+        guard let match = logRegex.firstMatch(in: trimmed, range: range) else { return nil }
+        guard let tsRange = Range(match.range(at: 1), in: trimmed),
+              let contentRange = Range(match.range(at: 2), in: trimmed) else { return nil }
+        
+        let tsString = String(trimmed[tsRange])
+        let content = String(trimmed[contentRange]).trimmingCharacters(in: .whitespaces)
+        
+        guard let timestamp = LogEntry.timestampFormatter.date(from: tsString) else { return nil }
+        return LogEntry(timestamp: timestamp, content: content)
+    }
+    
+    /// Recursively build a tree from a flat list of parsed items.
     /// Returns the nodes at `parentLevel + 1` and the index where parsing stopped.
     private static func buildTree(
-        from lines: [ParsedLine],
+        from items: [ParsedItem],
         startIndex: Int,
         parentLevel: Int
     ) -> (nodes: [EventNode], nextIndex: Int) {
@@ -68,26 +89,44 @@ struct MarkdownParser {
         var i = startIndex
         let childLevel = parentLevel + 1
         
-        while i < lines.count {
-            let line = lines[i]
+        while i < items.count {
+            // Check level of current item — if at or below parent, we're done
+            let itemLevel: Int
+            switch items[i] {
+            case .node(let level, _): itemLevel = level
+            case .log(let level, _): itemLevel = level
+            }
             
-            if line.level == childLevel {
-                // This is a direct child
-                var node = line.node
+            if itemLevel <= parentLevel {
+                break // Left this scope
+            }
+            
+            switch items[i] {
+            case .node(let level, let node) where level == childLevel:
+                var node = node
                 i += 1
                 
-                // Collect any deeper children
-                let (children, nextI) = buildTree(from: lines, startIndex: i, parentLevel: childLevel)
+                // Collect log entries that follow this node
+                var logs: [LogEntry] = []
+                while i < items.count {
+                    if case .log(_, let entry) = items[i] {
+                        logs.append(entry)
+                        i += 1
+                    } else {
+                        break
+                    }
+                }
+                node.logs = logs
+                
+                // Collect deeper children recursively
+                let (children, nextI) = buildTree(from: items, startIndex: i, parentLevel: childLevel)
                 node.children = children
                 i = nextI
                 
                 result.append(node)
-            } else if line.level > childLevel {
-                // Deeper than expected — skip (shouldn't happen in well-formed input)
-                i += 1
-            } else {
-                // line.level <= parentLevel — we've left this scope
-                break
+                
+            default:
+                i += 1 // Skip unexpected items
             }
         }
         
@@ -176,8 +215,6 @@ struct MarkdownParser {
         }
         
         // Check for Markdown Link: [Title](#id)
-        // Regex to match whole string roughly: ^\[(.*)\]\(#([^)]+)\)$
-        // But title might have extra chars if user typed loosely? Let's assume strict format for simplicity first.
         let linkRegex = try! NSRegularExpression(pattern: #"^\[(.*)\]\(#([^)]+)\)$"#)
         if let match = linkRegex.firstMatch(in: title, range: NSRange(title.startIndex..., in: title)) {
             if let titleRange = Range(match.range(at: 1), in: title),
@@ -188,6 +225,10 @@ struct MarkdownParser {
             }
         }
         
+        // Parse event type from emoji suffix
+        let (cleanTitle, eventType) = EventType.parse(from: title)
+        title = cleanTitle
+        
         guard !title.isEmpty else { return nil }
         
         return EventNode(
@@ -195,6 +236,7 @@ struct MarkdownParser {
             isChecked: isChecked,
             tags: tags,
             metadata: metadata,
+            eventType: eventType,
             anchorID: anchorID,
             referenceID: referenceID
         )
@@ -220,14 +262,14 @@ struct MarkdownParser {
         
         if let refID = node.referenceID {
             line += "[\(node.title)](#\(refID))"
-            // For references, we do NOT serialize any other tags or metadata.
-            // Just #ref is implied by the parser structure, or we can explicit add it if needed.
-            // User example: `[blocking event t1](-event-t1...) #blocking #ref`
-            // But user also said "ref task/event can not have any other properties".
-            // Let's add #ref explicitly to be safe and consistent with parser.
             line += " #ref"
         } else {
             line += node.title
+            
+            // Append event type emoji
+            if !node.eventType.emoji.isEmpty {
+                line += " \(node.eventType.emoji)"
+            }
             
             // Append Anchor if present: <a name="anchorID"></a>
             if let anchorID = node.anchorID {
@@ -246,6 +288,13 @@ struct MarkdownParser {
         }
         
         lines.append(line)
+        
+        // Serialize log entries (before children)
+        for log in node.logs {
+            let ts = LogEntry.timestampFormatter.string(from: log.timestamp)
+            let logIndent = String(repeating: " ", count: (depth + 1) * indentUnit)
+            lines.append("\(logIndent)> \(ts) \(log.content)")
+        }
         
         // Recurse into children
         for child in node.children {

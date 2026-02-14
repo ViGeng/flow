@@ -369,3 +369,187 @@ struct EventStateTests {
         #expect(!tags2.contains("ref")) // ref is still excluded
     }
 }
+
+// MARK: - Log Entry Tests
+
+struct LogEntryTests {
+    
+    @Test func parseLogEntry() throws {
+        let markdown = """
+        - [ ] Launch Product
+            > 2026-02-14 15:30 Kicked off the project
+            > 2026-02-14 16:00 Decided on Next.js stack
+        """
+        let nodes = MarkdownParser.parse(markdown)
+        #expect(nodes.count == 1)
+        #expect(nodes[0].title == "Launch Product")
+        #expect(nodes[0].logs.count == 2)
+        #expect(nodes[0].logs[0].content == "Kicked off the project")
+        #expect(nodes[0].logs[1].content == "Decided on Next.js stack")
+        
+        // Verify timestamp
+        let ts = LogEntry.timestampFormatter.string(from: nodes[0].logs[0].timestamp)
+        #expect(ts == "2026-02-14 15:30")
+    }
+    
+    @Test func parseLogWithChildren() throws {
+        let markdown = """
+        - [ ] Project A
+            > 2026-02-14 09:00 Started working
+            - [ ] Sub Task 1
+                > 2026-02-14 10:00 Sub log
+            - [x] Sub Task 2
+        """
+        let nodes = MarkdownParser.parse(markdown)
+        #expect(nodes.count == 1)
+        #expect(nodes[0].logs.count == 1)
+        #expect(nodes[0].logs[0].content == "Started working")
+        #expect(nodes[0].children.count == 2)
+        #expect(nodes[0].children[0].logs.count == 1)
+        #expect(nodes[0].children[0].logs[0].content == "Sub log")
+        #expect(nodes[0].children[1].logs.isEmpty)
+    }
+    
+    @Test func serializeLogEntries() throws {
+        let log1 = LogEntry(
+            timestamp: LogEntry.timestampFormatter.date(from: "2026-02-14 15:30")!,
+            content: "Started project"
+        )
+        let log2 = LogEntry(
+            timestamp: LogEntry.timestampFormatter.date(from: "2026-02-14 16:00")!,
+            content: "Finished setup"
+        )
+        let node = EventNode(title: "My Task", logs: [log1, log2])
+        let serialized = MarkdownParser.serialize([node])
+        
+        #expect(serialized.contains("- [ ] My Task"))
+        #expect(serialized.contains("> 2026-02-14 15:30 Started project"))
+        #expect(serialized.contains("> 2026-02-14 16:00 Finished setup"))
+    }
+    
+    @Test func logRoundTrip() throws {
+        let log = LogEntry(
+            timestamp: LogEntry.timestampFormatter.date(from: "2026-02-14 10:00")!,
+            content: "Round trip test"
+        )
+        let child = EventNode(title: "Child", logs: [
+            LogEntry(
+                timestamp: LogEntry.timestampFormatter.date(from: "2026-02-14 11:00")!,
+                content: "Child log"
+            )
+        ])
+        let node = EventNode(title: "Parent", children: [child], logs: [log])
+        
+        let serialized = MarkdownParser.serialize([node])
+        let reparsed = MarkdownParser.parse(serialized)
+        
+        #expect(reparsed.count == 1)
+        #expect(reparsed[0].logs.count == 1)
+        #expect(reparsed[0].logs[0].content == "Round trip test")
+        #expect(reparsed[0].children.count == 1)
+        #expect(reparsed[0].children[0].logs.count == 1)
+        #expect(reparsed[0].children[0].logs[0].content == "Child log")
+    }
+    
+    @Test func emptyLogContent() throws {
+        let markdown = "- [ ] Task\n    > 2026-02-14 15:30\n"
+        let nodes = MarkdownParser.parse(markdown)
+        #expect(nodes.count == 1)
+        #expect(nodes[0].logs.count == 1)
+        #expect(nodes[0].logs[0].content == "")
+    }
+    
+    @Test func noLogEntries() throws {
+        let node = EventNode(title: "No logs")
+        let serialized = MarkdownParser.serialize([node])
+        #expect(!serialized.contains(">"))
+        let reparsed = MarkdownParser.parse(serialized)
+        #expect(reparsed[0].logs.isEmpty)
+    }
+}
+
+// MARK: - Event Type Tests
+
+struct EventTypeTests {
+    
+    @Test func parseEventTypeFromEmoji() throws {
+        let (title1, type1) = EventType.parse(from: "Launch Product 🏁")
+        #expect(title1 == "Launch Product")
+        #expect(type1 == .milestone)
+        
+        let (title2, type2) = EventType.parse(from: "Weekly Sync 📅")
+        #expect(title2 == "Weekly Sync")
+        #expect(type2 == .event)
+        
+        let (title3, type3) = EventType.parse(from: "Normal Task")
+        #expect(title3 == "Normal Task")
+        #expect(type3 == .task)
+    }
+    
+    @Test func parseEventTypeFromMarkdown() throws {
+        let markdown = """
+        - [ ] Launch Product 🏁
+        - [ ] Weekly Sync 📅
+        - [ ] Normal Task
+        """
+        let nodes = MarkdownParser.parse(markdown)
+        #expect(nodes.count == 3)
+        #expect(nodes[0].eventType == .milestone)
+        #expect(nodes[0].title == "Launch Product")
+        #expect(nodes[1].eventType == .event)
+        #expect(nodes[1].title == "Weekly Sync")
+        #expect(nodes[2].eventType == .task)
+        #expect(nodes[2].title == "Normal Task")
+    }
+    
+    @Test func serializeEventType() throws {
+        let milestone = EventNode(title: "Release v2.0", eventType: .milestone)
+        let event = EventNode(title: "Sprint Review", eventType: .event)
+        let task = EventNode(title: "Fix bug")
+        
+        let serialized = MarkdownParser.serialize([milestone, event, task])
+        
+        #expect(serialized.contains("- [ ] Release v2.0 🏁"))
+        #expect(serialized.contains("- [ ] Sprint Review 📅"))
+        #expect(serialized.contains("- [ ] Fix bug"))
+        #expect(!serialized.contains("Fix bug 🏁"))
+        #expect(!serialized.contains("Fix bug 📅"))
+    }
+    
+    @Test func eventTypeRoundTrip() throws {
+        let nodes = [
+            EventNode(title: "Milestone", eventType: .milestone),
+            EventNode(title: "Event", eventType: .event),
+            EventNode(title: "Task")
+        ]
+        
+        let serialized = MarkdownParser.serialize(nodes)
+        let reparsed = MarkdownParser.parse(serialized)
+        
+        #expect(reparsed[0].eventType == .milestone)
+        #expect(reparsed[1].eventType == .event)
+        #expect(reparsed[2].eventType == .task)
+    }
+    
+    @Test func eventTypeCombinedWithLogsAndTags() throws {
+        let log = LogEntry(
+            timestamp: LogEntry.timestampFormatter.date(from: "2026-02-14 10:00")!,
+            content: "Started"
+        )
+        let node = EventNode(
+            title: "Big Release",
+            tags: ["urgent"],
+            logs: [log],
+            eventType: .milestone
+        )
+        
+        let serialized = MarkdownParser.serialize([node])
+        let reparsed = MarkdownParser.parse(serialized)
+        
+        #expect(reparsed[0].title == "Big Release")
+        #expect(reparsed[0].eventType == .milestone)
+        #expect(reparsed[0].tags.contains("urgent"))
+        #expect(reparsed[0].logs.count == 1)
+        #expect(reparsed[0].logs[0].content == "Started")
+    }
+}

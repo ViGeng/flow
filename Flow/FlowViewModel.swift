@@ -891,4 +891,46 @@ final class FlowViewModel {
         }
         saveNodes()
     }
+    
+    // MARK: - Log Management
+    
+    /// Add a timestamped log entry to a node.
+    func addLog(to nodeID: UUID, content: String) {
+        let trimmed = content.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return }
+        
+        let entry = LogEntry(content: trimmed)
+        mutateNode(id: nodeID, in: &nodes) { n in
+            n.logs.append(entry)
+        }
+        saveNodes()
+    }
+    
+    /// Edit an existing log entry's content.
+    func editLog(nodeID: UUID, logID: UUID, content: String) {
+        mutateNode(id: nodeID, in: &nodes) { n in
+            if let idx = n.logs.firstIndex(where: { $0.id == logID }) {
+                n.logs[idx].content = content
+            }
+        }
+        saveNodes()
+    }
+    
+    /// Delete a log entry from a node.
+    func deleteLog(nodeID: UUID, logID: UUID) {
+        mutateNode(id: nodeID, in: &nodes) { n in
+            n.logs.removeAll { $0.id == logID }
+        }
+        saveNodes()
+    }
+    
+    // MARK: - Event Type
+    
+    /// Set the event type (task, milestone, event) for a node.
+    func setEventType(_ nodeID: UUID, type: EventType) {
+        mutateNode(id: nodeID, in: &nodes) { n in
+            n.eventType = type
+        }
+        saveNodes()
+    }
 }
