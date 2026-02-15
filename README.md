@@ -56,7 +56,7 @@ brew install --cask flow
 
 ### Manual
 
-Download the latest `.dmg` from [Releases](https://github.com/ViGeng/flow/releases).
+Download the latest `.dmg` from [Releases](https://github.com/ViGeng/flow/releases) ![version](https://img.shields.io/badge/version-1.1.9-blue.svg).
 
 ## Build from Source
 
