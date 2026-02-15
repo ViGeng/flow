@@ -100,7 +100,7 @@ struct MarkdownParser {
             }
         }
         
-        }
+
         
         // Build tree recursively from flat list
         return buildTree(from: parsedItems, startIndex: 0, parentLevel: -1).nodes
