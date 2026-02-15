@@ -63,16 +63,28 @@ struct LogEntry: Identifiable, Codable, Equatable {
         self.content = content
     }
     
-    static let timestampFormatter: DateFormatter = {
+    /// Display formatter: yy-MM-dd HH:mm (Compact)
+    static let displayFormatter: DateFormatter = {
         let fmt = DateFormatter()
-        fmt.dateFormat = "MM-dd HH:mm"
+        fmt.dateFormat = "yy-MM-dd HH:mm"
         fmt.locale = Locale(identifier: "en_US_POSIX")
         return fmt
     }()
+    
+    /// Storage formatter: yyyy-MM-dd HH:mm (Unified)
+    static let storageFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        return fmt
+    }()
+    
+    // Deprecated backward compatibility accessor (points to display)
+    static var timestampFormatter: DateFormatter { displayFormatter }
 }
 
 /// The possible states an event node can be in.
-enum EventState: String, CaseIterable {
+enum EventState: String, CaseIterable, Codable {
     case active     // Ready to be worked on
     case waiting    // The actual blocker (has #wait tag)
     case blocked    // Parent blocked by child, or has unresolved waiting descendants
@@ -120,7 +132,9 @@ struct EventNode: Identifiable, Codable, Equatable {
         logs: [LogEntry] = [],
         eventType: EventType = .task,
         anchorID: String? = nil,
-        referenceID: String? = nil
+        referenceID: String? = nil,
+        createdAt: Date? = nil,
+        completedAt: Date? = nil
     ) {
         self.id = id
         self.title = title
@@ -132,6 +146,8 @@ struct EventNode: Identifiable, Codable, Equatable {
         self.eventType = eventType
         self.anchorID = anchorID
         self.referenceID = referenceID
+        self.createdAt = createdAt
+        self.completedAt = completedAt
     }
     
     // MARK: - Computed State (Bubble-Up Rule)
@@ -210,6 +226,19 @@ struct EventNode: Identifiable, Codable, Equatable {
         fmt.locale = Locale(identifier: "en_US_POSIX")
         return fmt
     }()
+    
+    /// Unified timestamp format: yyyy-MM-dd HH:mm
+    static let unifiedFormatter: DateFormatter = {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        return fmt
+    }()
+    
+    // MARK: - New Metadata Properties
+    
+    var createdAt: Date?
+    var completedAt: Date?
 }
 
 /// A named section grouping top-level EventNodes.

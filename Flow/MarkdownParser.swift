@@ -34,9 +34,46 @@ struct MarkdownParser {
         case log(level: Int, entry: LogEntry)
     }
     
-    /// Parse a Markdown string into an array of top-level EventNodes.
-    /// Regex to match log lines: `> YYYY-MM-DD HH:MM content`
-    private static let logRegex = try! NSRegularExpression(pattern: #"^>\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})\s*(.*)$"#)
+    // MARK: - Regex Patterns
+    
+    /// Regex to match log lines: `> [created: YYYY-MM-DD HH:mm] content`
+    /// Group 1: Timestamp, Group 2: Content
+    private static let logRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"^>\s*\[created:\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})\]\s*(.*)$"#)
+    }()
+    
+    /// Regex to match tags: `#tag` (excluding headers/anchors)
+    private static let tagRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"(?<!\()#(\w+)"#)
+    }()
+    
+    /// Regex to match metadata: `[key: value]` or `[key: yyyy-MM-dd HH:mm]`
+    private static let metaRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"\s*\[(.*?):\s*(.*?)\]"#)
+    }()
+    
+    /// Regex to match legacy metadata: `key:value` (e.g., due:2026-01-01)
+    private static let legacyMetaRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"(\w+):(\d{4}-\d{2}-\d{2})"#)
+    }()
+    
+    /// Regex to match cleaned metadata strings for removal
+    private static let legacyMetaCleanRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"\w+:\d{4}-\d{2}-\d{2}"#)
+    }()
+    
+    /// Regex to match HTML anchors: `<a id="..."></a>`
+    private static let anchorRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"<a\s+(?:id|name)="([^"]+)"\s*>\s*</a>"#, options: .caseInsensitive)
+    }()
+    
+    /// Regex to match Markdown links: `[Title](#id)`
+    private static let linkRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: #"^\[(.*)\]\(#([^)]+)\)$"#)
+    }()
+    
+    // MARK: - Parsing
+
     
     static func parse(_ text: String) -> [EventNode] {
         let lines = text.components(separatedBy: .newlines)
@@ -46,11 +83,14 @@ struct MarkdownParser {
             let raw = line.replacingOccurrences(of: "\t", with: "    ") // normalize tabs
             let trimmed = raw.trimmingCharacters(in: .whitespaces)
             
-            // Calculate indent level (number of leading spaces / 4)
+            // Calculate indent level with rounding (flexible indentation)
+            // 0-1 spaces -> level 0
+            // 2-5 spaces -> level 1 (4 spaces standard)
+            // 6-9 spaces -> level 2
             let leadingSpaces = raw.prefix(while: { $0 == " " }).count
-            let level = leadingSpaces / indentUnit
+            let level = Int((Double(leadingSpaces) / 4.0).rounded())
             
-            if trimmed.hasPrefix("- [") {
+            if trimmed.hasPrefix("- [") || trimmed.hasPrefix("* [") {
                 guard let node = parseLine(trimmed) else { continue }
                 parsedItems.append(.node(level: level, node: node))
             } else if trimmed.hasPrefix(">") {
@@ -60,92 +100,35 @@ struct MarkdownParser {
             }
         }
         
-        // Build tree recursively from flat list
-        return buildTree(from: parsedItems, startIndex: 0, parentLevel: -1).nodes
-    }
-    
-    /// Parse a log line like `> 2026-02-14 15:30 Some content here`
-    private static func parseLogLine(_ trimmed: String) -> LogEntry? {
-        let range = NSRange(trimmed.startIndex..., in: trimmed)
-        guard let match = logRegex.firstMatch(in: trimmed, range: range) else { return nil }
-        guard let tsRange = Range(match.range(at: 1), in: trimmed),
-              let contentRange = Range(match.range(at: 2), in: trimmed) else { return nil }
-        
-        let tsString = String(trimmed[tsRange])
-        let content = String(trimmed[contentRange]).trimmingCharacters(in: .whitespaces)
-        
-        guard let timestamp = LogEntry.timestampFormatter.date(from: tsString) else { return nil }
-        return LogEntry(timestamp: timestamp, content: content)
-    }
-    
-    /// Recursively build a tree from a flat list of parsed items.
-    /// Returns the nodes at `parentLevel + 1` and the index where parsing stopped.
-    private static func buildTree(
-        from items: [ParsedItem],
-        startIndex: Int,
-        parentLevel: Int
-    ) -> (nodes: [EventNode], nextIndex: Int) {
-        var result: [EventNode] = []
-        var i = startIndex
-        let childLevel = parentLevel + 1
-        
-        while i < items.count {
-            // Check level of current item — if at or below parent, we're done
-            let itemLevel: Int
-            switch items[i] {
-            case .node(let level, _): itemLevel = level
-            case .log(let level, _): itemLevel = level
-            }
-            
-            if itemLevel <= parentLevel {
-                break // Left this scope
-            }
-            
-            switch items[i] {
-            case .node(let level, let node) where level == childLevel:
-                var node = node
-                i += 1
-                
-                // Collect log entries that follow this node
-                var logs: [LogEntry] = []
-                while i < items.count {
-                    if case .log(_, let entry) = items[i] {
-                        logs.append(entry)
-                        i += 1
-                    } else {
-                        break
-                    }
-                }
-                node.logs = logs
-                
-                // Collect deeper children recursively
-                let (children, nextI) = buildTree(from: items, startIndex: i, parentLevel: childLevel)
-                node.children = children
-                i = nextI
-                
-                result.append(node)
-                
-            default:
-                i += 1 // Skip unexpected items
-            }
-        }
-        
-        return (result, i)
-    }
-    
-    // MARK: - Parsing Helpers
+        // ... (Inside parseLine) ...
 
     /// Parse a single trimmed Markdown line into an EventNode (without children).
     private static func parseLine(_ trimmed: String) -> EventNode? {
         let isChecked: Bool
         let afterBracket: String
         
-        if trimmed.hasPrefix("- [x] ") || trimmed.hasPrefix("- [X] ") {
-            isChecked = true
-            afterBracket = String(trimmed.dropFirst(6))
-        } else if trimmed.hasPrefix("- [ ] ") {
-            isChecked = false
-            afterBracket = String(trimmed.dropFirst(6))
+        // Flexible Checkbox Parsing
+        // Regex: (dash or star) (space?) [ (x or X or space) ] (space?)
+        // But we need to handle manually to extract "afterBracket"
+        
+        let range = NSRange(trimmed.startIndex..., in: trimmed)
+        
+        // Match "- [ ]", "- [x]", "* [ ]", "* [x]", and variations with missing spaces
+        // Group 1: Bullet (- or *)
+        // Group 2: State (space, x, X)
+        // Group 3: Rest of string
+        let laxCheckboxRegex = try! NSRegularExpression(pattern: #"^\s*([-*])\s*\[([ xX])\]\s*(.*)$"#)
+        
+        if let match = laxCheckboxRegex.firstMatch(in: trimmed, range: range) {
+            if let stateRange = Range(match.range(at: 2), in: trimmed),
+               let restRange = Range(match.range(at: 3), in: trimmed) {
+                
+                let state = String(trimmed[stateRange]).lowercased()
+                isChecked = (state == "x")
+                afterBracket = String(trimmed[restRange])
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -155,7 +138,6 @@ struct MarkdownParser {
         // Extract tags: #word patterns
         var tags: [String] = []
         // Ignore anchor fragments inside markdown links, e.g. "(#target-123)".
-        let tagRegex = try! NSRegularExpression(pattern: #"(?<!\()#(\w+)"#)
         let tagMatches = tagRegex.matches(in: remaining, range: NSRange(remaining.startIndex..., in: remaining))
         for match in tagMatches {
             if let range = Range(match.range(at: 1), in: remaining) {
@@ -169,23 +151,58 @@ struct MarkdownParser {
             withTemplate: ""
         )
         
-        // Extract metadata: key:value patterns (e.g., due:2026-03-15)
+        // Extract metadata: [key: value] patterns (Unified Timestamp Format)
         var metadata: [String: String] = [:]
-        let metaRegex = try! NSRegularExpression(pattern: #"(\w+):(\d{4}-\d{2}-\d{2})"#)
-        let metaMatches = metaRegex.matches(in: afterBracket, range: NSRange(afterBracket.startIndex..., in: afterBracket))
+        
+        var createdAt: Date?
+        var completedAt: Date?
+        
+        let metaMatches = metaRegex.matches(in: remaining, range: NSRange(remaining.startIndex..., in: remaining))
         for match in metaMatches {
-            if let keyRange = Range(match.range(at: 1), in: afterBracket),
-               let valRange = Range(match.range(at: 2), in: afterBracket) {
-                let key = String(afterBracket[keyRange])
-                let val = String(afterBracket[valRange])
-                if key != "blocked" { // skip tag-like words
+            if let keyRange = Range(match.range(at: 1), in: remaining),
+               let valRange = Range(match.range(at: 2), in: remaining) {
+                let key = String(remaining[keyRange]).trimmingCharacters(in: .whitespaces)
+                let val = String(remaining[valRange]).trimmingCharacters(in: .whitespaces)
+                
+                if key == "created" {
+                    createdAt = EventNode.unifiedFormatter.date(from: val)
+                } else if key == "done" {
+                    completedAt = EventNode.unifiedFormatter.date(from: val)
+                } else if key == "due" {
+                    // Try unified first, then simple date fallback
+                    if let date = EventNode.unifiedFormatter.date(from: val) {
+                        metadata["due"] = EventNode.unifiedFormatter.string(from: date)
+                    } else if let date = EventNode.dateFormatter.date(from: val) {
+                        metadata["due"] = EventNode.dateFormatter.string(from: date)
+                    } else {
+                         metadata[key] = val
+                    }
+                } else {
+                     metadata[key] = val
+                }
+            }
+        }
+        
+        // Remove metadata from remaining title
+        remaining = metaRegex.stringByReplacingMatches(
+            in: remaining,
+            range: NSRange(remaining.startIndex..., in: remaining),
+            withTemplate: ""
+        )
+        
+        // Legacy Support: metadata like `due:YYYY-MM-DD` (without brackets)
+        let legacyMatches = legacyMetaRegex.matches(in: remaining, range: NSRange(remaining.startIndex..., in: remaining))
+        for match in legacyMatches {
+            if let keyRange = Range(match.range(at: 1), in: remaining),
+               let valRange = Range(match.range(at: 2), in: remaining) {
+                let key = String(remaining[keyRange])
+                let val = String(remaining[valRange])
+                if key != "blocked" && metadata[key] == nil { // Don't overwrite bracketed
                     metadata[key] = val
                 }
             }
         }
-        // Remove metadata from remaining title
-        let metaCleanRegex = try! NSRegularExpression(pattern: #"\w+:\d{4}-\d{2}-\d{2}"#)
-        remaining = metaCleanRegex.stringByReplacingMatches(
+        remaining = legacyMetaCleanRegex.stringByReplacingMatches(
             in: remaining,
             range: NSRange(remaining.startIndex..., in: remaining),
             withTemplate: ""
@@ -200,8 +217,6 @@ struct MarkdownParser {
         var referenceID: String?
         
         // Check for HTML Anchor: <a id="..."></a>
-        // Regex: <a\s+(?:id|name)="([^"]+)"\s*>\s*</a>
-        let anchorRegex = try! NSRegularExpression(pattern: #"<a\s+(?:id|name)="([^"]+)"\s*>\s*</a>"#, options: .caseInsensitive)
         if let match = anchorRegex.firstMatch(in: title, range: NSRange(title.startIndex..., in: title)) {
             if let idRange = Range(match.range(at: 1), in: title) {
                 anchorID = String(title[idRange])
@@ -215,7 +230,6 @@ struct MarkdownParser {
         }
         
         // Check for Markdown Link: [Title](#id)
-        let linkRegex = try! NSRegularExpression(pattern: #"^\[(.*)\]\(#([^)]+)\)$"#)
         if let match = linkRegex.firstMatch(in: title, range: NSRange(title.startIndex..., in: title)) {
             if let titleRange = Range(match.range(at: 1), in: title),
                let idRange = Range(match.range(at: 2), in: title) {
@@ -238,7 +252,9 @@ struct MarkdownParser {
             metadata: metadata,
             eventType: eventType,
             anchorID: anchorID,
-            referenceID: referenceID
+            referenceID: referenceID,
+            createdAt: createdAt,
+            completedAt: completedAt
         )
     }
     
@@ -281,9 +297,30 @@ struct MarkdownParser {
                 line += " #\(tag)"
             }
             
-            // Append metadata
+            // Append unified timestamps [key: value]
+            if let created = node.createdAt {
+                let ts = EventNode.unifiedFormatter.string(from: created)
+                line += " [created: \(ts)]"
+            }
+            
+            if let done = node.completedAt {
+                let ts = EventNode.unifiedFormatter.string(from: done)
+                line += " [done: \(ts)]"
+            }
+            
+            // Append metadata (including due)
             for (key, value) in node.metadata.sorted(by: { $0.key < $1.key }) {
-                line += " \(key):\(value)"
+                // If value matches unified format (basically due), wrap in brackets [key: val]
+                // Else use legacy format or bracket? Spec says [key: value]. 
+                // Let's adopt consistent [key: value] for all metadata if possible, but keep simple space separation for now?
+                // The parser supports [key: value].
+                if key == "due" {
+                    line += " [\(key): \(value)]"
+                } else {
+                    // Start migrating other metadata to brackets too?
+                    // For now, only enforce on due/timestamps.
+                    line += " [\(key): \(value)]"
+                }
             }
         }
         
@@ -291,9 +328,9 @@ struct MarkdownParser {
         
         // Serialize log entries (before children)
         for log in node.logs {
-            let ts = LogEntry.timestampFormatter.string(from: log.timestamp)
+            let ts = LogEntry.storageFormatter.string(from: log.timestamp)
             let logIndent = String(repeating: " ", count: (depth + 1) * indentUnit)
-            lines.append("\(logIndent)> \(ts) \(log.content)")
+            lines.append("\(logIndent)> [created: \(ts)] \(log.content)")
         }
         
         // Recurse into children

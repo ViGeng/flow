@@ -795,7 +795,7 @@ final class FlowViewModel {
             cleanTitle = raw
         }
         
-        let newNode = EventNode(title: cleanTitle, tags: tags)
+        let newNode = EventNode(title: cleanTitle, tags: tags, createdAt: Date())
         
         if let parentID = selectedNodeID {
             let found = mutateNode(id: parentID, in: &nodes) { parent in
@@ -867,6 +867,9 @@ final class FlowViewModel {
             n.isChecked.toggle()
             if n.isChecked {
                 n.tags.removeAll { $0 == "wait" }
+                n.completedAt = Date()
+            } else {
+                n.completedAt = nil
             }
         }
         saveNodes()
@@ -892,7 +895,11 @@ final class FlowViewModel {
     func setDueDate(_ nodeID: UUID, date: Date?) {
         mutateNode(id: nodeID, in: &nodes) { n in
             if let date {
-                n.metadata["due"] = EventNode.dateFormatter.string(from: date)
+                // Use unified formatter to include time if needed, or default to 12:00/start of day?
+                // For now, preserve existing behavior but use unified format if user provides time.
+                // The picker currently only picks date, so we can use yyyy-MM-dd HH:mm with default time or keep it simple.
+                // Spec says unified format is preferred.
+                n.metadata["due"] = EventNode.unifiedFormatter.string(from: date)
             } else {
                 n.metadata.removeValue(forKey: "due")
             }
