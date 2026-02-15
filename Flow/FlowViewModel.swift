@@ -165,7 +165,7 @@ final class FlowViewModel {
     private static let defaultDirName = "Flow_Debug"
     #else
     private static let bookmarkKey = "flowFolderBookmark"
-    private static let defaultFileName = "flow.md"
+    nonisolated static let defaultFileName = "flow.md"
     private static let defaultDirName = "Flow"
     #endif
     

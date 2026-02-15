@@ -100,7 +100,82 @@ struct MarkdownParser {
             }
         }
         
-        // ... (Inside parseLine) ...
+        }
+        
+        // Build tree recursively from flat list
+        return buildTree(from: parsedItems, startIndex: 0, parentLevel: -1).nodes
+    }
+    
+    /// Parse a log line like `> [time: 2026-02-14 15:30] Some content here`
+    private static func parseLogLine(_ trimmed: String) -> LogEntry? {
+        let range = NSRange(trimmed.startIndex..., in: trimmed)
+        guard let match = logRegex.firstMatch(in: trimmed, range: range) else { return nil }
+        guard let tsRange = Range(match.range(at: 1), in: trimmed),
+              let contentRange = Range(match.range(at: 2), in: trimmed) else { return nil }
+        
+        let tsString = String(trimmed[tsRange])
+        let content = String(trimmed[contentRange]).trimmingCharacters(in: .whitespaces)
+        
+        guard let timestamp = LogEntry.storageFormatter.date(from: tsString) else { return nil }
+        return LogEntry(timestamp: timestamp, content: content)
+    }
+
+    /// Recursively build a tree from a flat list of parsed items.
+    /// Returns the nodes at `parentLevel + 1` and the index where parsing stopped.
+    private static func buildTree(
+        from items: [ParsedItem],
+        startIndex: Int,
+        parentLevel: Int
+    ) -> (nodes: [EventNode], nextIndex: Int) {
+        var result: [EventNode] = []
+        var i = startIndex
+        let childLevel = parentLevel + 1
+        
+        while i < items.count {
+            // Check level of current item — if at or below parent, we're done
+            let itemLevel: Int
+            switch items[i] {
+            case .node(let level, _): itemLevel = level
+            case .log(let level, _): itemLevel = level
+            }
+            
+            if itemLevel <= parentLevel {
+                break // Left this scope
+            }
+            
+            switch items[i] {
+            case .node(let level, let node) where level == childLevel:
+                var node = node
+                i += 1
+                
+                // Collect log entries that follow this node
+                var logs: [LogEntry] = []
+                while i < items.count {
+                    if case .log(_, let entry) = items[i] {
+                        logs.append(entry)
+                        i += 1
+                    } else {
+                        break
+                    }
+                }
+                node.logs = logs
+                
+                // Collect deeper children recursively
+                let (children, nextI) = buildTree(from: items, startIndex: i, parentLevel: childLevel)
+                node.children = children
+                i = nextI
+                
+                result.append(node)
+                
+            default:
+                i += 1 // Skip unexpected items
+            }
+        }
+        
+        return (result, i)
+    }
+    
+    // MARK: - Parsing Helpers
 
     /// Parse a single trimmed Markdown line into an EventNode (without children).
     private static func parseLine(_ trimmed: String) -> EventNode? {
